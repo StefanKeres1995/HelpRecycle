@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "558788923162",
+    "firebase_url": "https://helprecycle-d8ce3.firebaseio.com",
+    "project_id": "helprecycle-d8ce3",
+    "storage_bucket": "helprecycle-d8ce3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558788923162:android:bc65bb35b52767eb",
+        "android_client_info": {
+          "package_name": "pt.ipleiria.helprecycle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "558788923162-9296lmltd8mfar8p88vmm6tbrli61ogi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pt.ipleiria.helprecycle",
+            "certificate_hash": "390c615d2ba11c93d8b5568bfbe8f01393fa6f0f"
+          }
+        },
+        {
+          "client_id": "558788923162-fjdsmbd0p0j0o1cs2a8a9fpbeg02r7nj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pt.ipleiria.helprecycle",
+            "certificate_hash": "e6e0db6edbe3b5ff0a37c212e6779e32df818a20"
+          }
+        },
+        {
+          "client_id": "558788923162-mjjl0f1b7i7pl5jk1cu7fhd1tfnb73eg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFykDa7DIXESFIGkBwdNL676Of5Y5d4R0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "558788923162-mjjl0f1b7i7pl5jk1cu7fhd1tfnb73eg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
