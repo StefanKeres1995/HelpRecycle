@@ -38,7 +38,8 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_navigation"></activity>
+            android:label="@string/title_activity_navigation">
+        </activity>
         <activity
             android:name=".gps.GPSActivity"
             android:label="@string/title_activity_gps">

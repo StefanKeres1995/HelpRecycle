@@ -387,7 +387,8 @@ public final class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.item_gps:
-                Intent gpsActivity = new Intent(this, GPSActivity.class);
+                //Intent gpsActivity = new Intent(this, GPSActivity.class);
+                Intent gpsActivity = new Intent (this, MapsActivity.class);
                 startActivity(gpsActivity);
             default:
                 return super.onOptionsItemSelected(item);

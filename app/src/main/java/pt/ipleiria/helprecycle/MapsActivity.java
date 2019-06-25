@@ -1,14 +1,23 @@
 package pt.ipleiria.helprecycle;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -22,25 +31,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        Toast.makeText(this, "Map is ready", Toast.LENGTH_SHORT).show();
-        mMap = googleMap;
-
-        if (mLocationPermissionGranted) {
-            getDeviceLocation();
-
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            //this show the user location ball on the map
-            mMap.setMyLocationEnabled(true);
-        }
-    }
 
     private GoogleMap mMap;
 
@@ -48,6 +41,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 15f;
+
+    private static final int MANUAL_PERMISSION_REQUEST_CODE = 4444;
+    private static final int EXIT_GPS_ACTIVATION_CODE = 5555;
 
     private Boolean mLocationPermissionGranted = false;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -58,6 +54,60 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
 
         getLocationPermission();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        //Valor obtido através do website: http://mapasonline.cm-leiria.pt/MuniSIGInter/Html5Viewer/index.html?viewer=Gesto_de_Resduos_Urbanos_e_Higiene_Pblica.Gesto_Resduos_Urbanos_e_Higiene_Pblica&fbclid=IwAR38eDZqi04ICOM8UTimqg8AAs9PvHayejVr9l_FFITE5UlbyN9qduGe5XM
+        LatLng ecopontoExemplo = new LatLng(39.73313, -8.82109);
+        mMap.addMarker(new MarkerOptions().position(ecopontoExemplo).title("Ecoponto #1"));
+
+        if (mLocationPermissionGranted) {
+            verifyAndGetGPS();
+        }else{
+            //do i really need this verification?
+        }
+    }
+
+    private void verifyAndGetGPS() {
+
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            getAndSetLocation();
+        }else{
+            GPSDisabled();
+        }
+    }
+
+    private void getAndSetLocation (){
+        getDeviceLocation();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        //this show the user location ball on the map
+        mMap.setMyLocationEnabled(true);
+    }
+
+    private void GPSDisabled() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.AlertDialog);
+        alertDialogBuilder.setMessage("This app needs access to your GPS and it is disabled. Would you like to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Enable GPS",
+                        new DialogInterface.OnClickListener(){
+                            public void onClick(DialogInterface dialog, int id){
+                                Intent GPSSettingIntent = new Intent(
+                                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                startActivityForResult(GPSSettingIntent, EXIT_GPS_ACTIVATION_CODE);
+                            }
+                        });
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
     }
 
     private void getDeviceLocation(){
@@ -122,34 +172,56 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     for(int i = 0; i < grantResults.length; i++) {
                         if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                             mLocationPermissionGranted = false;
+                            //User didn't grant location permissions
+                            //this function doesnt prevent the user from clicking "Dont show again"--userDidntGrantPermissionHandler();
+                            userChoseToNeverAskForPermissions();
                             return;
                         }
                     }
                     mLocationPermissionGranted = true;
+                    //verifyAndGetGPS();
                     initMap();
                 }
             }
         }
     }
 
-    /*
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        System.out.println("this is working? 1");
-        //1st- Move camera to Estg Campus
-        LatLng estgCampus = new LatLng(39.734498, -8.821044);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(estgCampus, 18.0f));
-        //2nd- Add a marker where a recycling bin is
-        //Valor obtido através do website: http://mapasonline.cm-leiria.pt/MuniSIGInter/Html5Viewer/index.html?viewer=Gesto_de_Resduos_Urbanos_e_Higiene_Pblica.Gesto_Resduos_Urbanos_e_Higiene_Pblica&fbclid=IwAR38eDZqi04ICOM8UTimqg8AAs9PvHayejVr9l_FFITE5UlbyN9qduGe5XM
-        LatLng ecopontoExemplo = new LatLng(39.73313, -8.82109);
-        mMap.addMarker(new MarkerOptions().position(ecopontoExemplo).title("Ecoponto #1"));
-
-
-        //3rd- Ask user to use location, Move camera to where user is
-
-
+    private void userChoseToNeverAskForPermissions() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
+        builder.setMessage("This app needs permission to access your location. Please set it manually.");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Permit Manually", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent intent = new Intent();
+                intent.setAction(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                startActivityForResult(intent, MANUAL_PERMISSION_REQUEST_CODE);
+            }
+        });
+        builder.show();
     }
-    */
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == MANUAL_PERMISSION_REQUEST_CODE){
+            getLocationPermission();
+        }else if(requestCode == EXIT_GPS_ACTIVATION_CODE){
+            //This handler is necessary because we need a time error margin between when the user enables his location and when we verify if it is active.
+            //Conclusions:
+            //If theres no waiting time: The GPS request will pop up even when the user already enabled his location
+            //If the waiting time is too short: It will crash the app because it detected the active GPS but it doesn't have a location established yet
+            Toast.makeText(this, "Verifying GPS...", Toast.LENGTH_LONG).show();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    verifyAndGetGPS();
+                }
+            }, 4000);   //5 seconds
+        }
+    }
 }
