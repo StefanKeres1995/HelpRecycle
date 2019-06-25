@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">HelpRecycle</string>
     <string name="title_activity_gps">Map</string>
+    <string name="title_activity_navigation">Navigation</string>
 </resources>
