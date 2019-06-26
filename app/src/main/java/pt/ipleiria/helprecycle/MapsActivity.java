@@ -27,10 +27,16 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.maps.android.clustering.ClusterManager;
 
+import java.util.ArrayList;
+
+import pt.ipleiria.helprecycle.Maps.ClusterManagerRenderer;
+import pt.ipleiria.helprecycle.Maps.ClusterMarker;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -48,6 +54,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Boolean mLocationPermissionGranted = false;
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
+    private ClusterManager mClusterManager;
+    private ClusterManagerRenderer mClusterManagerRenderer;
+    private ArrayList<ClusterMarker> mClusterMarkers = new ArrayList<>();
+
+    private LatLngBounds mMapBoundary;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,13 +72,78 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         //Valor obtido através do website: http://mapasonline.cm-leiria.pt/MuniSIGInter/Html5Viewer/index.html?viewer=Gesto_de_Resduos_Urbanos_e_Higiene_Pblica.Gesto_Resduos_Urbanos_e_Higiene_Pblica&fbclid=IwAR38eDZqi04ICOM8UTimqg8AAs9PvHayejVr9l_FFITE5UlbyN9qduGe5XM
-        LatLng ecopontoExemplo = new LatLng(39.73313, -8.82109);
-        mMap.addMarker(new MarkerOptions().position(ecopontoExemplo).title("Ecoponto #1"));
+        addMapMarkers();
 
         if (mLocationPermissionGranted) {
             verifyAndGetGPS();
+
         }else{
             //do i really need this verification?
+        }
+    }
+
+    private void setCameraView(Location l) {
+
+        // Set a boundary to start
+        double bottomBoundary = l.getLatitude() - .1;
+        double leftBoundary = l.getLongitude() - .1;
+        double topBoundary = l.getLatitude() + .1;
+        double rightBoundary = l.getLongitude() + .1;
+
+        mMapBoundary = new LatLngBounds(
+                new LatLng(bottomBoundary, leftBoundary),
+                new LatLng(topBoundary, rightBoundary)
+        );
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mMapBoundary, 0));
+    }
+
+    private void addMapMarkers(){
+
+        if(mMap != null){
+
+            if(mClusterManager == null){
+                mClusterManager = new ClusterManager<ClusterMarker>(this.getApplicationContext(), mMap);
+            }
+            if(mClusterManagerRenderer == null){
+                mClusterManagerRenderer = new ClusterManagerRenderer(
+                        this,
+                        mMap,
+                        mClusterManager
+                );
+                mClusterManager.setRenderer(mClusterManagerRenderer);
+            }
+
+            //For each recycling bin
+            //for(UserLocation userLocation: mUserLocations){
+
+                //System.out.println("addMapMarkers: location: " + userLocation.getGeo_point().toString());
+                try{
+                    String snippet = "";
+
+                    snippet = "Determine route to Ecoponto #1?";
+
+                    int avatar = R.drawable.recycle; // set the default avatar
+
+                    ClusterMarker newClusterMarker = new ClusterMarker(
+                            //new LatLng(userLocation.getGeo_point().getLatitude(), userLocation.getGeo_point().getLongitude()),
+                            new LatLng(39.73313, -8.82109),
+                            //userLocation.getUser().getUsername(),
+                            "ecoponto #1",
+                            snippet,
+                            avatar
+                    );
+                    mClusterManager.addItem(newClusterMarker);
+                    mClusterMarkers.add(newClusterMarker);
+
+                }catch (NullPointerException e){
+                    System.out.println("addMapMarkers: NullPointerException: " + e.getMessage() );
+                }
+
+            //}
+            mClusterManager.cluster();
+
+            //setCameraView();
         }
     }
 
@@ -121,9 +198,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if(task.isSuccessful()){
                             //we know current location
                             Location currentLocation = (Location) task.getResult();
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
-
-
+                            setCameraView(currentLocation);
+                            //moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
                         }else{
                             //we dont know the current location
                             Toast.makeText(MapsActivity.this, "Cant Find current location", Toast.LENGTH_SHORT).show();
