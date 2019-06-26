@@ -71,15 +71,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        //Testando com limites de Zoom
+        //mMap.setMinZoomPreference(15f);
         //Valor obtido através do website: http://mapasonline.cm-leiria.pt/MuniSIGInter/Html5Viewer/index.html?viewer=Gesto_de_Resduos_Urbanos_e_Higiene_Pblica.Gesto_Resduos_Urbanos_e_Higiene_Pblica&fbclid=IwAR38eDZqi04ICOM8UTimqg8AAs9PvHayejVr9l_FFITE5UlbyN9qduGe5XM
         addMapMarkers();
 
-        if (mLocationPermissionGranted) {
-            verifyAndGetGPS();
+        verifyAndGetGPS();
 
-        }else{
-            //do i really need this verification?
-        }
     }
 
     private void setCameraView(Location l) {
@@ -98,6 +97,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mMapBoundary, 0));
     }
 
+    //Makes and adds the custom markers to the map
+    //Need to make a marker list, so that I can spread them out
     private void addMapMarkers(){
 
         if(mMap != null){
@@ -129,7 +130,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             //new LatLng(userLocation.getGeo_point().getLatitude(), userLocation.getGeo_point().getLongitude()),
                             new LatLng(39.73313, -8.82109),
                             //userLocation.getUser().getUsername(),
-                            "ecoponto #1",
+                            "ESTG",
                             snippet,
                             avatar
                     );
@@ -213,9 +214,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /*
     private void moveCamera(LatLng latLng, float zoom){
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
+    */
 
     private void initMap(){
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);

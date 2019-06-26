@@ -46,5 +46,8 @@ dependencies {
 
     implementation 'com.google.apis:google-api-services-vision:v1-rev376-1.23.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
+
+    implementation  'com.google.maps.android:android-maps-utils:0.5+'
+
 }
 apply plugin: 'com.google.gms.google-services'
