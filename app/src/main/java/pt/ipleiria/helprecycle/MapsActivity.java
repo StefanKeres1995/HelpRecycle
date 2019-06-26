@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Handler;
@@ -34,12 +35,14 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import pt.ipleiria.helprecycle.Maps.ClusterManagerRenderer;
 import pt.ipleiria.helprecycle.Maps.ClusterMarker;
@@ -65,13 +68,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<ClusterMarker> mClusterMarkers = new ArrayList<>();
 
     private LatLngBounds mMapBoundary;
-    //THIS PARAMETER DOESNT WORK
+
     private Location currentLocation;
 
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         setContentView(R.layout.activity_maps);
 
         getLocationPermission();
@@ -95,63 +100,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 markerLocation.setLatitude(marker.getPosition().latitude);
                 markerLocation.setLongitude(marker.getPosition().longitude);
 
+                getDeviceLocation();
+
                 float distance = currentLocation.distanceTo(markerLocation);
-                //double distance = CalculationByDistance(new LatLng(marker.getPosition().latitude, marker.getPosition().longitude), new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())) * 1000;
 
                 System.out.println("distance is" + distance);
-                if(distance <= 20){
+                if(distance <= 25){
                     inRange = true;
                 }else{
                     inRange = false;
                 }
 
-                //DEBUG ALERT I CAN'T CHANGE USER CURRENT LOCATION?
-                final AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
-                    builder.setMessage("Distance to point is: " + distance + " and i'ts !!" + inRange + "!! that you are in range." +
-                            " Current Location: [Lat-" + currentLocation.getLatitude() + "; Long-" + currentLocation.getLongitude() + "]" +
-                            " Marker Location: [Lat-" + markerLocation.getLatitude() + ", Long- "+ markerLocation.getLongitude() + " Marker name: " + marker.getTitle())
-                            .setCancelable(true)
-                            .setPositiveButton("Understood", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                final AlertDialog alert = builder.create();
-                alert.show();
-
-
-                //binInteractionMessage(inRange, marker);
+                binInteractionMessage(inRange, marker);
             }
         });
 
         verifyAndGetGPS();
 
-    }
-
-    public double CalculationByDistance(LatLng StartP, LatLng EndP) {
-        int Radius = 6371;// radius of earth in Km
-        double lat1 = StartP.latitude;
-        double lat2 = EndP.latitude;
-        double lon1 = StartP.longitude;
-        double lon2 = EndP.longitude;
-        double dLat = Math.toRadians(lat2 - lat1);
-        double dLon = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                + Math.cos(Math.toRadians(lat1))
-                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
-                * Math.sin(dLon / 2);
-        double c = 2 * Math.asin(Math.sqrt(a));
-        double valueResult = Radius * c;
-        double km = valueResult / 1;
-        DecimalFormat newFormat = new DecimalFormat("####");
-        int kmInDec = Integer.valueOf(newFormat.format(km));
-        double meter = valueResult % 1000;
-        int meterInDec = Integer.valueOf(newFormat.format(meter));
-        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
-                + " Meter   " + meterInDec);
-
-        return Radius * c;
     }
 
     //If the user is in range, It will let the user play!
@@ -162,7 +127,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(i){
             builder.setMessage("You're in range bro!!!")
                     .setCancelable(true)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Take me to andre's activity", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //intent to andre's Activity!!!
@@ -285,7 +250,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void verifyAndGetGPS() {
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             getAndSetLocation();
@@ -325,7 +290,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void getDeviceLocation(){
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         try{
             if(mLocationPermissionGranted){
                 mFusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
