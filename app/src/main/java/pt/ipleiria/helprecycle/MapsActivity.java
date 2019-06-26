@@ -2,9 +2,11 @@ package pt.ipleiria.helprecycle;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -26,13 +28,17 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import pt.ipleiria.helprecycle.Maps.ClusterManagerRenderer;
@@ -59,6 +65,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<ClusterMarker> mClusterMarkers = new ArrayList<>();
 
     private LatLngBounds mMapBoundary;
+    //THIS PARAMETER DOESNT WORK
+    private Location currentLocation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,15 +78,138 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
         mMap = googleMap;
 
         //Testando com limites de Zoom
-        //mMap.setMinZoomPreference(15f);
+        mMap.setMinZoomPreference(18.5f);
+        mMap.getUiSettings().setMapToolbarEnabled(false);
         //Valor obtido através do website: http://mapasonline.cm-leiria.pt/MuniSIGInter/Html5Viewer/index.html?viewer=Gesto_de_Resduos_Urbanos_e_Higiene_Pblica.Gesto_Resduos_Urbanos_e_Higiene_Pblica&fbclid=IwAR38eDZqi04ICOM8UTimqg8AAs9PvHayejVr9l_FFITE5UlbyN9qduGe5XM
         addMapMarkers();
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                boolean inRange = false;
+
+                Location markerLocation = new Location("MarkerLocation");
+                markerLocation.setLatitude(marker.getPosition().latitude);
+                markerLocation.setLongitude(marker.getPosition().longitude);
+
+                float distance = currentLocation.distanceTo(markerLocation);
+                //double distance = CalculationByDistance(new LatLng(marker.getPosition().latitude, marker.getPosition().longitude), new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())) * 1000;
+
+                System.out.println("distance is" + distance);
+                if(distance <= 20){
+                    inRange = true;
+                }else{
+                    inRange = false;
+                }
+
+                //DEBUG ALERT I CAN'T CHANGE USER CURRENT LOCATION?
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                    builder.setMessage("Distance to point is: " + distance + " and i'ts !!" + inRange + "!! that you are in range." +
+                            " Current Location: [Lat-" + currentLocation.getLatitude() + "; Long-" + currentLocation.getLongitude() + "]" +
+                            " Marker Location: [Lat-" + markerLocation.getLatitude() + ", Long- "+ markerLocation.getLongitude() + " Marker name: " + marker.getTitle())
+                            .setCancelable(true)
+                            .setPositiveButton("Understood", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                final AlertDialog alert = builder.create();
+                alert.show();
+
+
+                //binInteractionMessage(inRange, marker);
+            }
+        });
 
         verifyAndGetGPS();
+
+    }
+
+    public double CalculationByDistance(LatLng StartP, LatLng EndP) {
+        int Radius = 6371;// radius of earth in Km
+        double lat1 = StartP.latitude;
+        double lat2 = EndP.latitude;
+        double lon1 = StartP.longitude;
+        double lon2 = EndP.longitude;
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1))
+                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
+                * Math.sin(dLon / 2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        double valueResult = Radius * c;
+        double km = valueResult / 1;
+        DecimalFormat newFormat = new DecimalFormat("####");
+        int kmInDec = Integer.valueOf(newFormat.format(km));
+        double meter = valueResult % 1000;
+        int meterInDec = Integer.valueOf(newFormat.format(meter));
+        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
+                + " Meter   " + meterInDec);
+
+        return Radius * c;
+    }
+
+    //If the user is in range, It will let the user play!
+    //otherwise, it will tell the user to get closer
+    private void binInteractionMessage(boolean i, Marker marker){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+
+        if(i){
+            builder.setMessage("You're in range bro!!!")
+                    .setCancelable(true)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //intent to andre's Activity!!!
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+        }else{
+            builder.setMessage("You're too far from this recycling station. Get closer!")
+                    .setCancelable(true)
+                    .setPositiveButton("Understood", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+        }
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void drawCircle(LatLng point){
+
+        // Instantiating CircleOptions to draw a circle around the marker
+        CircleOptions circleOptions = new CircleOptions();
+
+        // Specifying the center of the circle
+        circleOptions.center(point);
+
+        // Radius of the circle
+        circleOptions.radius(20);
+
+        // Border color of the circle
+        circleOptions.strokeColor(Color.BLACK);
+
+        // Fill color of the circle
+        circleOptions.fillColor(0x30ff0000);
+
+        // Border width of the circle
+        circleOptions.strokeWidth(2);
+
+        // Adding the circle to the GoogleMap
+        mMap.addCircle(circleOptions);
 
     }
 
@@ -122,20 +254,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 try{
                     String snippet = "";
 
-                    snippet = "Determine route to Ecoponto #1?";
+                    snippet = "Interact with Ecoponto #1?";
 
                     int avatar = R.drawable.recycle; // set the default avatar
 
                     ClusterMarker newClusterMarker = new ClusterMarker(
                             //new LatLng(userLocation.getGeo_point().getLatitude(), userLocation.getGeo_point().getLongitude()),
-                            new LatLng(39.73313, -8.82109),
+                            //new LatLng(39.73313, -8.82109),
+                            //new LatLng(39.75607, -8.77968),
+                            new LatLng(39.756517, -8.779753),
                             //userLocation.getUser().getUsername(),
-                            "ESTG",
+                            "Andrinos",
                             snippet,
                             avatar
                     );
                     mClusterManager.addItem(newClusterMarker);
                     mClusterMarkers.add(newClusterMarker);
+                    drawCircle(newClusterMarker.getPosition());
+
 
                 }catch (NullPointerException e){
                     System.out.println("addMapMarkers: NullPointerException: " + e.getMessage() );
@@ -149,7 +285,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void verifyAndGetGPS() {
-
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
@@ -168,6 +303,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+
         //this show the user location ball on the map
         mMap.setMyLocationEnabled(true);
     }
@@ -192,15 +328,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         try{
             if(mLocationPermissionGranted){
-                Task location = mFusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener() {
+                mFusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                     @Override
-                    public void onComplete(@NonNull Task task) {
+                    public void onComplete(@NonNull Task<Location> task) {
                         if(task.isSuccessful()){
-                            //we know current location
-                            Location currentLocation = (Location) task.getResult();
-                            setCameraView(currentLocation);
-                            //moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+                            Location location = task.getResult();
+                            currentLocation = location;
+                            setCameraView(location);
                         }else{
                             //we dont know the current location
                             Toast.makeText(MapsActivity.this, "Cant Find current location", Toast.LENGTH_SHORT).show();
