@@ -2,8 +2,11 @@ package pt.ipleiria.helprecycle;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -76,6 +79,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         populateRecycleBins();
 
         getLocationPermission();
+
+        registerReceiver(mGpsSwitchStateReceiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
     }
 
     @Override
@@ -453,11 +458,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
 
-
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bestBin.getLocation(), 15f));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bestBin.getLocation(), 18.5f));
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private BroadcastReceiver mGpsSwitchStateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //HAS A GLITCH, IF YOU SPAM THE LOCATION BUTTON THE POPUL WILL SPAWN FOREVER
+            if (intent.getAction().matches("android.location.PROVIDERS_CHANGED")) {
+                    // Make an action or refresh an already managed state.
+                    Toast.makeText(MapsActivity.this, "Trying to detect GPS signal...", Toast.LENGTH_SHORT).show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        verifyAndGetGPS();
+                    }
+                }, 4000);   //5 seconds
+            }
+        }
+    };
 }
