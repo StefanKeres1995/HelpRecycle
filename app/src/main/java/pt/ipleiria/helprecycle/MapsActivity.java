@@ -2,25 +2,23 @@ package pt.ipleiria.helprecycle;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -33,22 +31,18 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import pt.ipleiria.helprecycle.Maps.ClusterManagerRenderer;
 import pt.ipleiria.helprecycle.Maps.ClusterMarker;
+import pt.ipleiria.helprecycle.Maps.RecycleBin;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
@@ -72,12 +66,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Location currentLocation;
 
     private LocationManager locationManager;
+    private ArrayList<RecycleBin> recycleBins = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         setContentView(R.layout.activity_maps);
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        populateRecycleBins();
 
         getLocationPermission();
     }
@@ -89,7 +85,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Testando com limites de Zoom
         mMap.setMinZoomPreference(18.5f);
         mMap.getUiSettings().setMapToolbarEnabled(false);
-        //Valor obtido através do website: http://mapasonline.cm-leiria.pt/MuniSIGInter/Html5Viewer/index.html?viewer=Gesto_de_Resduos_Urbanos_e_Higiene_Pblica.Gesto_Resduos_Urbanos_e_Higiene_Pblica&fbclid=IwAR38eDZqi04ICOM8UTimqg8AAs9PvHayejVr9l_FFITE5UlbyN9qduGe5XM
         addMapMarkers();
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
@@ -105,7 +100,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 float distance = currentLocation.distanceTo(markerLocation);
 
                 System.out.println("distance is" + distance);
-                if(distance <= 25){
+                if(distance <= 20){
                     inRange = true;
                 }else{
                     inRange = false;
@@ -116,7 +111,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         verifyAndGetGPS();
-
     }
 
     //If the user is in range, It will let the user play!
@@ -213,24 +207,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
             //For each recycling bin
-            //for(UserLocation userLocation: mUserLocations){
+            for(RecycleBin r: recycleBins){
 
                 //System.out.println("addMapMarkers: location: " + userLocation.getGeo_point().toString());
                 try{
-                    String snippet = "";
-
-                    snippet = "Interact with Ecoponto #1?";
-
                     int avatar = R.drawable.recycle; // set the default avatar
 
                     ClusterMarker newClusterMarker = new ClusterMarker(
-                            //new LatLng(userLocation.getGeo_point().getLatitude(), userLocation.getGeo_point().getLongitude()),
-                            //new LatLng(39.73313, -8.82109),
-                            //new LatLng(39.75607, -8.77968),
-                            new LatLng(39.756517, -8.779753),
-                            //userLocation.getUser().getUsername(),
-                            "Andrinos",
-                            snippet,
+                            r.getLocation(),
+                            r.getTitle(),
+                            r.getSnippet(),
                             avatar
                     );
                     mClusterManager.addItem(newClusterMarker);
@@ -242,11 +228,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     System.out.println("addMapMarkers: NullPointerException: " + e.getMessage() );
                 }
 
-            //}
+            }
             mClusterManager.cluster();
 
             //setCameraView();
         }
+    }
+
+    private void populateRecycleBins(){
+        //Valor obtido através do website: http://mapasonline.cm-leiria.pt/MuniSIGInter/Html5Viewer/index.html?viewer=Gesto_de_Resduos_Urbanos_e_Higiene_Pblica.Gesto_Resduos_Urbanos_e_Higiene_Pblica&fbclid=IwAR38eDZqi04ICOM8UTimqg8AAs9PvHayejVr9l_FFITE5UlbyN9qduGe5XM
+        //ESTG
+        recycleBins.add(new RecycleBin("ESTG Automóvel", new LatLng(39.73313, -8.82109)));
+        recycleBins.add(new RecycleBin("ESTG Cantina 3", new LatLng(39.734689, -8.822158)));
+        recycleBins.add(new RecycleBin("ESTG Edificio A", new LatLng(39.735039, -8.820771)));
+
+                //My House 2
+                //new LatLng(39.75607, -8.77968),
+
+                //My House
+                //new LatLng(39.756517, -8.779753),))
     }
 
     private void verifyAndGetGPS() {
@@ -261,6 +261,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void getAndSetLocation (){
         getDeviceLocation();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                setCameraView(currentLocation);
+            }
+        }, 1000);   //5 seconds
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
@@ -298,7 +304,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if(task.isSuccessful()){
                             Location location = task.getResult();
                             currentLocation = location;
-                            setCameraView(location);
+                            //setCameraView(location);
                         }else{
                             //we dont know the current location
                             Toast.makeText(MapsActivity.this, "Cant Find current location", Toast.LENGTH_SHORT).show();
@@ -399,6 +405,59 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     verifyAndGetGPS();
                 }
             }, 4000);   //5 seconds
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_navigation, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.app_bar_nearest:
+                //getClosest
+                Toast.makeText(MapsActivity.this, "Retrieving nearest recycling bin", Toast.LENGTH_SHORT).show();
+
+                getDeviceLocation();
+
+                //random high value
+                float distance = -1;
+                //Location bestLocation = new Location("RecycleLocation1");
+                RecycleBin bestBin = new RecycleBin("",null);
+                for (RecycleBin recycleBin : recycleBins) {
+                    if(distance == -1){
+                        //first time, we dont have a distance yet
+                        Location recycleLocation = new Location("RecycleLocation");
+                        recycleLocation.setLatitude(recycleBin.getLocation().latitude);
+                        recycleLocation.setLongitude(recycleBin.getLocation().longitude);
+
+                        distance = currentLocation.distanceTo(recycleLocation);
+                        bestBin = recycleBin;
+                    }else{
+                        Location recycleLocation = new Location("RecycleLocation");
+                        recycleLocation.setLatitude(recycleBin.getLocation().latitude);
+                        recycleLocation.setLongitude(recycleBin.getLocation().longitude);
+
+                        float newDistance = currentLocation.distanceTo(recycleLocation);
+
+                        if(newDistance < distance){
+
+                            bestBin = recycleBin;
+                        }
+                    }
+                }
+
+
+
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bestBin.getLocation(), 15f));
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

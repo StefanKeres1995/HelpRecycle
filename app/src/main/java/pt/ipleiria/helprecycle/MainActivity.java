@@ -26,8 +26,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.common.annotation.KeepName;
-import com.google.android.gms.vision.label.ImageLabel;
-import com.google.android.gms.vision.label.internal.client.ImageLabelerOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,7 +33,6 @@ import java.util.List;
 
 import pt.ipleiria.helprecycle.common.GraphicOverlay;
 import pt.ipleiria.helprecycle.common.VisionImageProcessor;
-import pt.ipleiria.helprecycle.gps.GPSActivity;
 
 @KeepName
 public final class MainActivity extends AppCompatActivity {
