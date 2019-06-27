@@ -1,0 +1,1001 @@
+﻿background,NOTHING
+tench,ANIMAL
+goldfish,ANIMAL
+great white shark,ANIMAL
+tiger shark,ANIMAL
+hammerhead,ANIMAL
+electric ray,ANIMAL
+stingray,ANIMAL
+cock,ANIMAL
+hen,ANIMAL
+ostrich,ANIMAL
+brambling,ANIMAL
+goldfinch,ANIMAL
+house finch,ANIMAL
+junco,ANIMAL
+indigo bunting,ANIMAL
+robin,ANIMAL
+bulbul,ANIMAL
+jay,ANIMAL
+magpie,ANIMAL
+chickadee,ANIMAL
+water ouzel,ANIMAL
+kite,ANIMAL
+bald eagle,ANIMAL
+vulture,ANIMAL
+great grey owl,ANIMAL
+European fire salamander,ANIMAL
+common newt,ANIMAL
+eft,ANIMAL
+spotted salamander,ANIMAL
+axolotl,ANIMAL
+bullfrog,ANIMAL
+tree frog,ANIMAL
+tailed frog,ANIMAL
+loggerhead,ANIMAL
+leatherback turtle,ANIMAL
+mud turtle,ANIMAL
+terrapin,ANIMAL
+box turtle,ANIMAL
+banded gecko,ANIMAL
+common iguana,ANIMAL
+American chameleon,ANIMAL
+whiptail,ANIMAL
+agama,ANIMAL
+frilled lizard,ANIMAL
+alligator lizard,ANIMAL
+Gila monster,ANIMAL
+green lizard,ANIMAL
+African chameleon,ANIMAL
+Komodo dragon,ANIMAL
+African crocodile,ANIMAL
+American alligator,ANIMAL
+triceratops,ANIMAL
+thunder snake,ANIMAL
+ringneck snake,ANIMAL
+hognose snake,ANIMAL
+green snake,ANIMAL
+king snake,ANIMAL
+garter snake,ANIMAL
+water snake,ANIMAL
+vine snake,ANIMAL
+night snake,ANIMAL
+boa constrictor,ANIMAL
+rock python,ANIMAL
+Indian cobra,ANIMAL
+green mamba,ANIMAL
+sea snake,ANIMAL
+horned viper,ANIMAL
+diamondback,ANIMAL
+sidewinder,ANIMAL
+trilobite,ANIMAL
+harvestman,ANIMAL
+scorpion,ANIMAL
+black and gold garden spider,ANIMAL
+barn spider,ANIMAL
+garden spider,ANIMAL
+black widow,ANIMAL
+tarantula,ANIMAL
+wolf spider,ANIMAL
+tick,ANIMAL
+centipede,ANIMAL
+black grouse,ANIMAL
+ptarmigan,ANIMAL
+ruffed grouse,ANIMAL
+prairie chicken,ANIMAL
+peacock,ANIMAL
+quail,ANIMAL
+partridge,ANIMAL
+African grey,ANIMAL
+macaw,ANIMAL
+sulphur-crested cockatoo,ANIMAL
+lorikeet,ANIMAL
+coucal,ANIMAL
+bee eater,ANIMAL
+hornbill,ANIMAL
+hummingbird,ANIMAL
+jacamar,ANIMAL
+toucan,ANIMAL
+drake,ANIMAL
+red-breasted merganser,ANIMAL
+goose,ANIMAL
+black swan,ANIMAL
+tusker,ANIMAL
+echidna,ANIMAL
+platypus,ANIMAL
+wallaby,ANIMAL
+koala,ANIMAL
+wombat,ANIMAL
+jellyfish,ANIMAL
+sea anemone,ANIMAL
+brain coral,ANIMAL
+flatworm,ANIMAL
+nematode,ANIMAL
+conch,ANIMAL
+snail,ANIMAL
+slug,ANIMAL
+sea slug,ANIMAL
+chiton,ANIMAL
+chambered nautilus,ANIMAL
+Dungeness crab,ANIMAL
+rock crab,ANIMAL
+fiddler crab,ANIMAL
+king crab,ANIMAL
+American lobster,ANIMAL
+spiny lobster,ANIMAL
+crayfish,ANIMAL
+hermit crab,ANIMAL
+isopod,ANIMAL
+white stork,ANIMAL
+black stork,ANIMAL
+spoonbill,ANIMAL
+flamingo,ANIMAL
+little blue heron,ANIMAL
+American egret,ANIMAL
+bittern,ANIMAL
+crane,ANIMAL
+limpkin,ANIMAL
+European gallinule,ANIMAL
+American coot,ANIMAL
+bustard,ANIMAL
+ruddy turnstone,ANIMAL
+red-backed sandpiper,ANIMAL
+redshank,ANIMAL
+dowitcher,ANIMAL
+oystercatcher,ANIMAL
+pelican,ANIMAL
+king penguin,ANIMAL
+albatross,ANIMAL
+grey whale,ANIMAL
+killer whale,ANIMAL
+dugong,ANIMAL
+sea lion,ANIMAL
+Chihuahua,ANIMAL
+Japanese spaniel,ANIMAL
+Maltese dog,ANIMAL
+Pekinese,ANIMAL
+Shih-Tzu,ANIMAL
+Blenheim spaniel,ANIMAL
+papillon,ANIMAL
+toy terrier,ANIMAL
+Rhodesian ridgeback,ANIMAL
+Afghan hound,ANIMAL
+basset,ANIMAL
+beagle,ANIMAL
+bloodhound,ANIMAL
+bluetick,ANIMAL
+black-and-tan coonhound,ANIMAL
+Walker hound,ANIMAL
+English foxhound,ANIMAL
+redbone,ANIMAL
+borzoi,ANIMAL
+Irish wolfhound,ANIMAL
+Italian greyhound,ANIMAL
+whippet,ANIMAL
+Ibizan hound,ANIMAL
+Norwegian elkhound,ANIMAL
+otterhound,ANIMAL
+Saluki,ANIMAL
+Scottish deerhound,ANIMAL
+Weimaraner,ANIMAL
+Staffordshire bullterrier,ANIMAL
+American Staffordshire terrier,ANIMAL
+Bedlington terrier,ANIMAL
+Border terrier,ANIMAL
+Kerry blue terrier,ANIMAL
+Irish terrier,ANIMAL
+Norfolk terrier,ANIMAL
+Norwich terrier,ANIMAL
+Yorkshire terrier,ANIMAL
+wire-haired fox terrier,ANIMAL
+Lakeland terrier,ANIMAL
+Sealyham terrier,ANIMAL
+Airedale,ANIMAL
+cairn,ANIMAL
+Australian terrier,ANIMAL
+Dandie Dinmont,ANIMAL
+Boston bull,ANIMAL
+miniature schnauzer,ANIMAL
+giant schnauzer,ANIMAL
+standard schnauzer,ANIMAL
+Scotch terrier,ANIMAL
+Tibetan terrier,ANIMAL
+silky terrier,ANIMAL
+soft-coated wheaten terrier,ANIMAL
+West Highland white terrier,ANIMAL
+Lhasa,ANIMAL
+flat-coated retriever,ANIMAL
+curly-coated retriever,ANIMAL
+golden retriever,ANIMAL
+Labrador retriever,ANIMAL
+Chesapeake Bay retriever,ANIMAL
+German short-haired pointer,ANIMAL
+vizsla,ANIMAL
+English setter,ANIMAL
+Irish setter,ANIMAL
+Gordon setter,ANIMAL
+Brittany spaniel,ANIMAL
+clumber,ANIMAL
+English springer,ANIMAL
+Welsh springer spaniel,ANIMAL
+cocker spaniel,ANIMAL
+Sussex spaniel,ANIMAL
+Irish water spaniel,ANIMAL
+kuvasz,ANIMAL
+schipperke,ANIMAL
+groenendael,ANIMAL
+malinois,ANIMAL
+briard,ANIMAL
+kelpie,ANIMAL
+komondor,ANIMAL
+Old English sheepdog,ANIMAL
+Shetland sheepdog,ANIMAL
+collie,ANIMAL
+Border collie,ANIMAL
+Bouvier des Flandres,ANIMAL
+Rottweiler,ANIMAL
+German shepherd,ANIMAL
+Doberman,ANIMAL
+miniature pinscher,ANIMAL
+Greater Swiss Mountain dog,ANIMAL
+Bernese mountain dog,ANIMAL
+Appenzeller,ANIMAL
+EntleBucher,ANIMAL
+boxer,ANIMAL
+bull mastiff,ANIMAL
+Tibetan mastiff,ANIMAL
+French bulldog,ANIMAL
+Great Dane,ANIMAL
+Saint Bernard,ANIMAL
+Eskimo dog,ANIMAL
+malamute,ANIMAL
+Siberian husky,ANIMAL
+dalmatian,ANIMAL
+affenpinscher,ANIMAL
+basenji,ANIMAL
+pug,ANIMAL
+Leonberg,ANIMAL
+Newfoundland,ANIMAL
+Great Pyrenees,ANIMAL
+Samoyed,ANIMAL
+Pomeranian,ANIMAL
+chow,ANIMAL
+keeshond,ANIMAL
+Brabancon griffon,ANIMAL
+Pembroke,ANIMAL
+Cardigan,ANIMAL
+toy poodle,ANIMAL
+miniature poodle,ANIMAL
+standard poodle,ANIMAL
+Mexican hairless,ANIMAL
+timber wolf,ANIMAL
+white wolf,ANIMAL
+red wolf,ANIMAL
+coyote,ANIMAL
+dingo,ANIMAL
+dhole,ANIMAL
+African hunting dog,ANIMAL
+hyena,ANIMAL
+red fox,ANIMAL
+kit fox,ANIMAL
+Arctic fox,ANIMAL
+grey fox,ANIMAL
+tabby,ANIMAL
+tiger cat,ANIMAL
+Persian cat,ANIMAL
+Siamese cat,ANIMAL
+Egyptian cat,ANIMAL
+cougar,ANIMAL
+lynx,ANIMAL
+leopard,ANIMAL
+snow leopard,ANIMAL
+jaguar,ANIMAL
+lion,ANIMAL
+tiger,ANIMAL
+cheetah,ANIMAL
+brown bear,ANIMAL
+American black bear,ANIMAL
+ice bear,ANIMAL
+sloth bear,ANIMAL
+mongoose,ANIMAL
+meerkat,ANIMAL
+tiger beetle,ANIMAL
+ladybug,ANIMAL
+ground beetle,ANIMAL
+long-horned beetle,ANIMAL
+leaf beetle,ANIMAL
+dung beetle,ANIMAL
+rhinoceros beetle,ANIMAL
+weevil,ANIMAL
+fly,ANIMAL
+bee,ANIMAL
+ant,ANIMAL
+grasshopper,ANIMAL
+cricket,ANIMAL
+walking stick,ANIMAL
+cockroach,ANIMAL
+mantis,ANIMAL
+cicada,ANIMAL
+leafhopper,ANIMAL
+lacewing,ANIMAL
+dragonfly,ANIMAL
+damselfly,ANIMAL
+admiral,ANIMAL
+ringlet,ANIMAL
+monarch,ANIMAL
+cabbage butterfly,ANIMAL
+sulphur butterfly,ANIMAL
+lycaenid,ANIMAL
+starfish,ANIMAL
+sea urchin,ANIMAL
+sea cucumber,ANIMAL
+wood rabbit,ANIMAL
+hare,ANIMAL
+Angora,ANIMAL
+hamster,ANIMAL
+porcupine,ANIMAL
+fox squirrel,ANIMAL
+marmot,ANIMAL
+beaver,ANIMAL
+guinea pig,ANIMAL
+sorrel,ANIMAL
+zebra,ANIMAL
+hog,ANIMAL
+wild boar,ANIMAL
+warthog,ANIMAL
+hippopotamus,ANIMAL
+ox,ANIMAL
+water buffalo,ANIMAL
+bison,ANIMAL
+ram,ANIMAL
+bighorn,ANIMAL
+ibex,ANIMAL
+hartebeest,ANIMAL
+impala,ANIMAL
+gazelle,ANIMAL
+Arabian camel,ANIMAL
+llama,ANIMAL
+weasel,ANIMAL
+mink,ANIMAL
+polecat,ANIMAL
+black-footed ferret,ANIMAL
+otter,ANIMAL
+skunk,ANIMAL
+badger,ANIMAL
+armadillo,ANIMAL
+three-toed sloth,ANIMAL
+orangutan,ANIMAL
+gorilla,ANIMAL
+chimpanzee,ANIMAL
+gibbon,ANIMAL
+siamang,ANIMAL
+guenon,ANIMAL
+patas,ANIMAL
+baboon,ANIMAL
+macaque,ANIMAL
+langur,ANIMAL
+colobus,ANIMAL
+proboscis monkey,ANIMAL
+marmoset,ANIMAL
+capuchin,ANIMAL
+howler monkey,ANIMAL
+titi,ANIMAL
+spider monkey,ANIMAL
+squirrel monkey,ANIMAL
+Madagascar cat,ANIMAL
+indri,ANIMAL
+Indian elephant,ANIMAL
+African elephant,ANIMAL
+lesser panda,ANIMAL
+giant panda,ANIMAL
+barracouta,ANIMAL
+eel,ANIMAL
+coho,ANIMAL
+rock beauty,ANIMAL
+anemone fish,ANIMAL
+sturgeon,ANIMAL
+gar,ANIMAL
+lionfish,ANIMAL
+puffer,ANIMAL
+abacus,NOT_RECYCLABLE
+abaya,TEXTILE
+academic gown,TEXTILE
+accordion,NOT_RECYCLABLE
+acoustic guitar,NOT_RECYCLABLE
+aircraft carrier,NOTHING
+airliner,NOTHING
+airship,NOTHING
+altar,NOTHING
+ambulance,NOTHING
+amphibian,NOTHING
+analog clock,NOT_RECYCLABLE
+apiary,NOTHING
+apron,TEXTILE
+ashcan,METAL
+assault rifle,NOTHING
+backpack,TEXTILE
+bakery,NOTHING
+balance beam,NOT_RECYCLABLE
+balloon,PLASTIC
+ballpoint,NOT_RECYCLABLE
+Band Aid,NOT_RECYCLABLE
+banjo,NOT_RECYCLABLE
+bannister,NOT_RECYCLABLE
+barbell,NOT_RECYCLABLE
+barber chair,NOT_RECYCLABLE
+barbershop,NOTHING
+barn,NOTHING
+barometer,NOT_RECYCLABLE
+barrel,NOT_RECYCLABLE
+barrow,NOT_RECYCLABLE
+baseball,NOT_RECYCLABLE
+basketball,NOT_RECYCLABLE
+bassinet,NOT_RECYCLABLE
+bassoon,NOT_RECYCLABLE
+bathing cap,WASTE
+bath towel,TEXTILE
+bathtub,NOTHING
+beach wagon,NOT_RECYCLABLE
+beacon,NOTHING
+beaker,GLASS
+bearskin,WASTE
+beer bottle,GLASS
+beer glass,GLASS
+bell cote,NOTHING
+bib,TEXTILE
+bicycle-built-for-two,NOT_RECYCLABLE
+bikini,TEXTILE
+binder,PLASTIC
+binoculars,NOT_RECYCLABLE
+birdhouse,NOT_RECYCLABLE
+boathouse,NOTHING
+bobsled,NOT_RECYCLABLE
+bolo tie,NOT_RECYCLABLE
+bonnet,TEXTILE
+bookcase,NOT_RECYCLABLE
+bookshop,NOTHING
+bottlecap,METAL
+bow,NOT_RECYCLABLE
+bow tie,TEXTILE
+brass,NOT_RECYCLABLE
+brassiere,TEXTILE
+breakwater,NOTHING
+breastplate,NOT_RECYCLABLE
+broom,NOT_RECYCLABLE
+bucket,NOT_RECYCLABLE
+buckle,NOT_RECYCLABLE
+bulletproof vest,NOT_RECYCLABLE
+bullet train,NOTHING
+butcher shop,NOTHING
+cab,NOTHING
+caldron,NOT_RECYCLABLE
+candle,NOT_RECYCLABLE
+cannon,NOT_RECYCLABLE
+canoe,NOT_RECYCLABLE
+can opener,NOT_RECYCLABLE
+cardigan,TEXTILE
+car mirror,NOT_RECYCLABLE
+carousel,NOTHING
+carpenter's kit,NOT_RECYCLABLE
+carton,PAPER
+car wheel,NOT_RECYCLABLE
+cash machine,NOT_RECYCLABLE
+cassette,NOT_RECYCLABLE
+cassette player,NOT_RECYCLABLE
+castle,NOTHING
+catamaran,NOTHING
+CD player,NOT_RECYCLABLE
+cello,NOT_RECYCLABLE
+cellular telephone,NOT_RECYCLABLE
+chain,NOT_RECYCLABLE
+chainlink fence,NOT_RECYCLABLE
+chain mail,NOT_RECYCLABLE
+chain saw,NOT_RECYCLABLE
+chest,NOTHING
+chiffonier,NOT_RECYCLABLE
+chime,NOT_RECYCLABLE
+china cabinet,NOT_RECYCLABLE
+Christmas stocking,TEXTILE
+church,NOTHING
+cinema,NOTHING
+cleaver,NOT_RECYCLABLE
+cliff dwelling,NOTHING
+cloak,TEXTILE
+clog,NOT_RECYCLABLE
+cocktail shaker,NOT_RECYCLABLE
+coffee mug,NOT_RECYCLABLE
+coffeepot,NOT_RECYCLABLE
+coil,NOT_RECYCLABLE
+combination lock,NOT_RECYCLABLE
+computer keyboard,NOT_RECYCLABLE
+confectionery,NOTHING
+container ship,NOTHING
+convertible,NOTHING
+corkscrew,NOT_RECYCLABLE
+cornet,NOT_RECYCLABLE
+cowboy boot,TEXTILE
+cowboy hat,TEXTILE
+cradle,NOT_RECYCLABLE
+crane,NOTHING
+crash helmet,NOT_RECYCLABLE
+crate,NOT_RECYCLABLE
+crib,NOT_RECYCLABLE
+Crock Pot,NOT_RECYCLABLE
+croquet ball,NOT_RECYCLABLE
+crutch,NOT_RECYCLABLE
+cuirass,NOT_RECYCLABLE
+dam,NOTHING
+desk,NOT_RECYCLABLE
+desktop computer,NOT_RECYCLABLE
+dial telephone,NOT_RECYCLABLE
+diaper,NOT_RECYCLABLE
+digital clock,NOT_RECYCLABLE
+digital watch,NOT_RECYCLABLE
+dining table,NOT_RECYCLABLE
+dishrag,TEXTILE
+dishwasher,NOT_RECYCLABLE
+disk brake,NOT_RECYCLABLE
+dock,NOTHING
+dogsled,NOT_RECYCLABLE
+dome,NOTHING
+doormat,TEXTILE
+drilling platform,NOTHING
+drum,NOT_RECYCLABLE
+drumstick,NOT_RECYCLABLE
+dumbbell,NOT_RECYCLABLE
+Dutch oven,NOT_RECYCLABLE
+electric fan,NOT_RECYCLABLE
+electric guitar,NOT_RECYCLABLE
+electric locomotive,NOTHING
+entertainment center,NOTHING
+envelope,PAPER
+espresso maker,NOT_RECYCLABLE
+face powder,NOT_RECYCLABLE
+feather boa,PLASTIC
+file,PLASTIC
+fireboat,NOTHING
+fire engine,NOTHING
+fire screen,NOT_RECYCLABLE
+flagpole,NOT_RECYCLABLE
+flute,NOT_RECYCLABLE
+folding chair,NOT_RECYCLABLE
+football helmet,NOT_RECYCLABLE
+forklift,NOT_RECYCLABLE
+fountain,NOTHING
+fountain pen,NOT_RECYCLABLE
+four-poster,NOT_RECYCLABLE
+freight car,NOTHING
+French horn,NOT_RECYCLABLE
+frying pan,NOT_RECYCLABLE
+fur coat,TEXTILE
+garbage truck,NOTHING
+gasmask,NOT_RECYCLABLE
+gas pump,NOTHING
+goblet,NOT_RECYCLABLE
+go-kart,NOTHING
+golf ball,NOT_RECYCLABLE
+golfcart,NOTHING
+gondola,NOTHING
+gong,NOT_RECYCLABLE
+gown,TEXTILE
+grand piano,NOT_RECYCLABLE
+greenhouse,NOTHING
+grille,NOT_RECYCLABLE
+grocery store,NOTHING
+guillotine,NOTHING
+hair slide,METAL
+hair spray,METAL
+half track,NOTHING
+hammer,NOT_RECYCLABLE
+hamper,NOT_RECYCLABLE
+hand blower,NOT_RECYCLABLE
+hand-held computer,NOT_RECYCLABLE
+handkerchief,TEXTILE
+hard disc,NOT_RECYCLABLE
+harmonica,NOT_RECYCLABLE
+harp,NOT_RECYCLABLE
+harvester,NOTHING
+hatchet,NOT_RECYCLABLE
+holster,NOT_RECYCLABLE
+home theater,NOTHING
+honeycomb,NOT_RECYCLABLE
+hook,NOT_RECYCLABLE
+hoopskirt,TEXTILE
+horizontal bar,NOT_RECYCLABLE
+horse cart,NOT_RECYCLABLE
+hourglass,NOT_RECYCLABLE
+iPod,NOT_RECYCLABLE
+iron,NOT_RECYCLABLE
+jack-o'-lantern,NOT_RECYCLABLE
+jean,TEXTILE
+jeep,NOTHING
+jersey,TEXTILE
+jigsaw puzzle,PAPER
+jinrikisha,NOTHING
+joystick,NOT_RECYCLABLE
+kimono,TEXTILE
+knee pad,NOT_RECYCLABLE
+knot,NOT_RECYCLABLE
+lab coat,TEXTILE
+ladle,NOT_RECYCLABLE
+lampshade,NOT_RECYCLABLE
+laptop,NOT_RECYCLABLE
+lawn mower,NOTHING
+lens cap,PLASTIC
+letter opener,NOT_RECYCLABLE
+library,NOTHING
+lifeboat,NOTHING
+lighter,NOT_RECYCLABLE
+limousine,NOTHING
+liner,NOT_RECYCLABLE
+lipstick,NOT_RECYCLABLE
+Loafer,NOT_RECYCLABLE
+lotion,PLASTIC
+loudspeaker,NOT_RECYCLABLE
+loupe,NOT_RECYCLABLE
+lumbermill,NOTHING
+magnetic compass,NOT_RECYCLABLE
+mailbag,TEXTILE
+mailbox,NOT_RECYCLABLE
+maillot,NOT_RECYCLABLE
+maillot,NOT_RECYCLABLE
+manhole cover,NOT_RECYCLABLE
+maraca,NOT_RECYCLABLE
+marimba,NOT_RECYCLABLE
+mask,PLASTIC
+matchstick,NOT_RECYCLABLE
+maypole,NOTHING
+maze,NOTHING
+measuring cup,GLASS
+medicine chest,NOT_RECYCLABLE
+megalith,NOTHING
+microphone,NOT_RECYCLABLE
+microwave,NOT_RECYCLABLE
+military uniform,TEXTILE
+milk can,NOT_RECYCLABLE
+minibus,NOTHING
+miniskirt,TEXTILE
+minivan,NOTHING
+missile,NOTHING
+mitten,TEXTILE
+mixing bowl,METAL
+mobile home,NOT_RECYCLABLE
+Model T,NOTHING
+modem,NOT_RECYCLABLE
+monastery,NOTHING
+monitor,NOT_RECYCLABLE
+moped,NOT_RECYCLABLE
+mortar,NOTHING
+mortarboard,TEXTILE
+mosque,NOTHING
+mosquito net,NOT_RECYCLABLE
+motor scooter,NOTHING
+mountain bike,NOTHING
+mountain tent,NOTHING
+mouse,NOT_RECYCLABLE
+mousetrap,NOT_RECYCLABLE
+moving van,NOTHING
+muzzle,NOT_RECYCLABLE
+nail,NOT_RECYCLABLE
+neck brace,NOT_RECYCLABLE
+necklace,NOT_RECYCLABLE
+nipple,NOT_RECYCLABLE
+notebook,PAPER
+obelisk,NOTHING
+oboe,NOT_RECYCLABLE
+ocarina,NOT_RECYCLABLE
+odometer,NOT_RECYCLABLE
+oil filter,NOT_RECYCLABLE
+organ,NOT_RECYCLABLE
+oscilloscope,NOT_RECYCLABLE
+overskirt,TEXTILE
+oxcart,NOTHING
+oxygen mask,NOT_RECYCLABLE
+packet,NOT_RECYCLABLE
+paddle,NOT_RECYCLABLE
+paddlewheel,NOTHING
+padlock,NOT_RECYCLABLE
+paintbrush,NOT_RECYCLABLE
+pajama,TEXTILE
+palace,NOTHING
+panpipe,NOT_RECYCLABLE
+paper towel,PAPER
+parachute,NOT_RECYCLABLE
+parallel bars,NOTHING
+park bench,NOTHING
+parking meter,NOTHING
+passenger car,NOTHING
+patio,NOTHING
+pay-phone,NOTHING
+pedestal,NOTHING
+pencil box,PLASTIC
+pencil sharpener,NOT_RECYCLABLE
+perfume,GLASS
+Petri dish,GLASS
+photocopier,NOT_RECYCLABLE
+pick,NOT_RECYCLABLE
+pickelhaube,NOT_RECYCLABLE
+picket fence,NOTHING
+pickup,NOTHING
+pier,NOTHING
+piggy bank,NOT_RECYCLABLE
+pill bottle,PLASTIC
+pillow,TEXTILE
+ping-pong ball,PLASTIC
+pinwheel,PLASTIC
+pirate,NOTHING
+pitcher,NOT_RECYCLABLE
+plane,NOTHING
+planetarium,NOTHING
+plastic bag,NOT_RECYCLABLE
+plate rack,NOT_RECYCLABLE
+plow,NOTHING
+plunger,NOT_RECYCLABLE
+Polaroid camera,NOT_RECYCLABLE
+pole,NOT_RECYCLABLE
+police van,NOTHING
+poncho,TEXTILE
+pool table,NOT_RECYCLABLE
+pop bottle,PLASTIC
+pot,NOT_RECYCLABLE
+potter's wheel,NOT_RECYCLABLE
+power drill,NOT_RECYCLABLE
+prayer rug,TEXTILE
+printer,NOT_RECYCLABLE
+prison,NOTHING
+projectile,NOTHING
+projector,NOT_RECYCLABLE
+puck,NOT_RECYCLABLE
+punching bag,NOT_RECYCLABLE
+purse,TEXTILE
+quill,NOT_RECYCLABLE
+quilt,TEXTILE
+racer,NOTHING
+racket,NOT_RECYCLABLE
+radiator,NOT_RECYCLABLE
+radio,NOT_RECYCLABLE
+radio telescope,NOT_RECYCLABLE
+rain barrel,NOT_RECYCLABLE
+recreational vehicle,NOTHING
+reel,NOT_RECYCLABLE
+reflex camera,NOT_RECYCLABLE
+refrigerator,NOT_RECYCLABLE
+remote control,NOT_RECYCLABLE
+restaurant,NOTHING
+revolver,NOT_RECYCLABLE
+rifle,NOT_RECYCLABLE
+rocking chair,NOT_RECYCLABLE
+rotisserie,NOT_RECYCLABLE
+rubber eraser,NOT_RECYCLABLE
+rugby ball,NOT_RECYCLABLE
+rule,PLASTIC
+running shoe,NOT_RECYCLABLE
+safe,NOT_RECYCLABLE
+safety pin,METAL
+saltshaker,NOT_RECYCLABLE
+sandal,NOT_RECYCLABLE
+sarong,TEXTILE
+sax,NOT_RECYCLABLE
+scabbard,NOT_RECYCLABLE
+scale,NOT_RECYCLABLE
+school bus,NOTHING
+schooner,NOTHING
+scoreboard,NOTHING
+screen,NOT_RECYCLABLE
+screw,NOT_RECYCLABLE
+screwdriver,NOT_RECYCLABLE
+seat belt,NOT_RECYCLABLE
+sewing machine,NOT_RECYCLABLE
+shield,NOT_RECYCLABLE
+shoe shop,NOTHING
+shoji,NOTHING
+shopping basket,NOT_RECYCLABLE
+shopping cart,NOT_RECYCLABLE
+shovel,NOT_RECYCLABLE
+shower cap,NOT_RECYCLABLE
+shower curtain,NOT_RECYCLABLE
+ski,NOT_RECYCLABLE
+ski mask,TEXTILE
+sleeping bag,TEXTILE
+slide rule,NOT_RECYCLABLE
+sliding door,NOT_RECYCLABLE
+slot,NOT_RECYCLABLE
+snorkel,PLASTIC
+snowmobile,NOTHING
+snowplow,NOTHING
+soap dispenser,PLASTIC
+soccer ball,NOT_RECYCLABLE
+sock,TEXTILE
+solar dish,NOTHING
+sombrero,NOT_RECYCLABLE
+soup bowl,NOT_RECYCLABLE
+space bar,NOT_RECYCLABLE
+space heater,NOT_RECYCLABLE
+space shuttle,NOTHING
+spatula,NOT_RECYCLABLE
+speedboat,NOTHING
+spider web,NOT_RECYCLABLE
+spindle,NOT_RECYCLABLE
+sports car,NOTHING
+spotlight,NOTHING
+stage,NOTHING
+steam locomotive,NOTHING
+steel arch bridge,NOTHING
+steel drum,NOT_RECYCLABLE
+stethoscope,NOT_RECYCLABLE
+stole,TEXTILE
+stone wall,NOTHING
+stopwatch,NOT_RECYCLABLE
+stove,NOT_RECYCLABLE
+strainer,NOT_RECYCLABLE
+streetcar,NOTHING
+stretcher,NOT_RECYCLABLE
+studio couch,NOT_RECYCLABLE
+stupa,NOTHING
+submarine,NOTHING
+suit,TEXTILE
+sundial,NOT_RECYCLABLE
+sunglass,NOT_RECYCLABLE
+sunglasses,NOT_RECYCLABLE
+sunscreen,PLASTIC
+suspension bridge,NOTHING
+swab,PLASTIC
+sweatshirt,TEXTILE
+swimming trunks,TEXTILE
+swing,NOT_RECYCLABLE
+switch,NOT_RECYCLABLE
+syringe,NOT_RECYCLABLE
+table lamp,NOT_RECYCLABLE
+tank,NOTHING
+tape player,NOT_RECYCLABLE
+teapot,NOT_RECYCLABLE
+teddy,TEXTILE
+television,NOT_RECYCLABLE
+tennis ball,NOT_RECYCLABLE
+thatch,WASTE
+theater curtain,TEXTILE
+thimble,NOT_RECYCLABLE
+thresher,NOTHING
+throne,NOTHING
+tile roof,NOT_RECYCLABLE
+toaster,NOT_RECYCLABLE
+tobacco shop,NOTHING
+toilet seat,NOT_RECYCLABLE
+torch,NOT_RECYCLABLE
+totem pole,NOT_RECYCLABLE
+tow truck,NOTHING
+toyshop,NOTHING
+tractor,NOTHING
+trailer truck,NOTHING
+tray,NOTHING
+trench coat,TEXTILE
+tricycle,NOT_RECYCLABLE
+trimaran,NOTHING
+tripod,NOT_RECYCLABLE
+triumphal arch,NOTHING
+trolleybus,NOTHING
+trombone,NOT_RECYCLABLE
+tub,NOT_RECYCLABLE
+turnstile,NOT_RECYCLABLE
+typewriter keyboard,NOT_RECYCLABLE
+umbrella,NOT_RECYCLABLE
+unicycle,NOT_RECYCLABLE
+upright,NOT_RECYCLABLE
+vacuum,NOT_RECYCLABLE
+vase,NOT_RECYCLABLE
+vault,NOTHING
+velvet,TEXTILE
+vending machine,NOT_RECYCLABLE
+vestment,TEXTILE
+viaduct,NOTHING
+violin,NOT_RECYCLABLE
+volleyball,NOT_RECYCLABLE
+waffle iron,NOT_RECYCLABLE
+wall clock,NOT_RECYCLABLE
+wallet,NOT_RECYCLABLE
+wardrobe,NOT_RECYCLABLE
+warplane,NOTHING
+washbasin,NOT_RECYCLABLE
+washer,NOT_RECYCLABLE
+water bottle,PLASTIC
+water jug,PLASTIC
+water tower,NOTHING
+whiskey jug,NOT_RECYCLABLE
+whistle,NOT_RECYCLABLE
+wig,NOT_RECYCLABLE
+window screen,PLASTIC
+window shade,NOT_RECYCLABLE
+Windsor tie,TEXTILE
+wine bottle,GLASS
+wing,NOT_RECYCLABLE
+wok,NOT_RECYCLABLE
+wooden spoon,NOT_RECYCLABLE
+wool,WASTE
+worm fence,NOTHING
+wreck,NOTHING
+yawl,NOTHING
+yurt,NOTHING
+web site,NOTHING
+comic book,PAPER
+crossword puzzle,PAPER
+street sign,NOT_RECYCLABLE
+traffic light,NOT_RECYCLABLE
+book jacket,PAPER
+menu,PAPER
+plate,NOT_RECYCLABLE
+guacamole,WASTE
+consomme,WASTE
+hot pot,WASTE
+trifle,WASTE
+ice cream,WASTE
+ice lolly,WASTE
+French loaf,WASTE
+bagel,WASTE
+pretzel,WASTE
+cheeseburger,WASTE
+hotdog,WASTE
+mashed potato,WASTE
+head cabbage,WASTE
+broccoli,WASTE
+cauliflower,WASTE
+zucchini,WASTE
+spaghetti squash,WASTE
+acorn squash,WASTE
+butternut squash,WASTE
+cucumber,WASTE
+artichoke,WASTE
+bell pepper,WASTE
+cardoon,WASTE
+mushroom,WASTE
+Granny Smith,WASTE
+strawberry,WASTE
+orange,WASTE
+lemon,WASTE
+fig,WASTE
+pineapple,WASTE
+banana,WASTE
+jackfruit,WASTE
+custard apple,WASTE
+pomegranate,WASTE
+hay,WASTE
+carbonara,WASTE
+chocolate sauce,WASTE
+dough,WASTE
+meat loaf,WASTE
+pizza,WASTE
+potpie,WASTE
+burrito,WASTE
+red wine,WASTE
+espresso,WASTE
+cup,NOT_RECYCLABLE
+eggnog,WASTE
+alp,NOTHING
+bubble,NOTHING
+cliff,NOTHING
+coral reef,NOTHING
+geyser,NOTHING
+lakeside,NOTHING
+promontory,NOTHING
+sandbar,NOTHING
+seashore,NOTHING
+valley,NOTHING
+volcano,NOTHING
+ballplayer,NOTHING
+groom,NOTHING
+scuba diver,NOTHING
+rapeseed,WASTE
+daisy,WASTE
+yellow lady's slipper,WASTE
+corn,WASTE
+acorn,WASTE
+hip,WASTE
+buckeye,WASTE
+coral fungus,WASTE
+agaric,WASTE
+gyromitra,WASTE
+stinkhorn,WASTE
+earthstar,WASTE
+hen-of-the-woods,WASTE
+bolete,WASTE
+ear,WASTE
+toilet tissue,PAPER
