@@ -20,6 +20,13 @@ android {
     packagingOptions {
         exclude 'META-INF/proguard/androidx-annotations.pro'
     }
+
+    // need this to store tflite models in assets
+    aaptOptions {
+        noCompress "tflite"
+        noCompress "lite"
+    }
+
 }
 
 dependencies {
@@ -39,6 +46,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.6'
 
 
+    implementation 'org.tensorflow:tensorflow-lite:+'
     implementation 'com.google.firebase:firebase-database:17.0.0'
 
     implementation 'com.google.api-client:google-api-client-android:1.23.0' exclude module: 'httpclient'
