@@ -83,7 +83,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
 
         //Testando com limites de Zoom
-        mMap.setMinZoomPreference(18.5f);
+        mMap.setMinZoomPreference(16f);
         mMap.getUiSettings().setMapToolbarEnabled(false);
         addMapMarkers();
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
