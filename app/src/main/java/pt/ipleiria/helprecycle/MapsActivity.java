@@ -71,6 +71,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private LocationManager locationManager;
     private ArrayList<RecycleBin> recycleBins = new ArrayList<>();
 
+    private boolean dialogShown = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +96,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                boolean inRange = false;
+                boolean inRange;
 
                 Location markerLocation = new Location("MarkerLocation");
                 markerLocation.setLatitude(marker.getPosition().latitude);
@@ -121,35 +123,42 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     //If the user is in range, It will let the user play!
     //otherwise, it will tell the user to get closer
     private void binInteractionMessage(boolean i, Marker marker){
-        final AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
-
-        if(i){
-            builder.setMessage("You're in range bro!!!")
-                    .setCancelable(true)
-                    .setPositiveButton("Take me to andre's activity", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //intent to andre's Activity!!!
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
+        if(dialogShown){
+            //Do nothing pls
         }else{
-            builder.setMessage("You're too far from this recycling station. Get closer!")
-                    .setCancelable(true)
-                    .setPositiveButton("Understood", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
+            dialogShown = true;
+            final AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+            if(i){
+                builder.setMessage("You're in range bro!!!")
+                        .setCancelable(true)
+                        .setPositiveButton("Take me to andre's activity", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //intent to andre's Activity!!!
+                                dialogShown = false;
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialogShown = false;
+                                dialog.cancel();
+                            }
+                        });
+            }else{
+                builder.setMessage("You're too far from this recycling station. Get closer!")
+                        .setCancelable(true)
+                        .setPositiveButton("Understood", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialogShown = false;
+                                dialog.dismiss();
+                            }
+                        });
+            }
+            final AlertDialog alert = builder.create();
+            alert.show();
         }
-        final AlertDialog alert = builder.create();
-        alert.show();
     }
 
     private void drawCircle(LatLng point){
@@ -285,19 +294,25 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void GPSDisabled() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.AlertDialog);
-        alertDialogBuilder.setMessage("This app needs access to your GPS and it is disabled. Would you like to enable it?")
-                .setCancelable(false)
-                .setPositiveButton("Enable GPS",
-                        new DialogInterface.OnClickListener(){
-                            public void onClick(DialogInterface dialog, int id){
-                                Intent GPSSettingIntent = new Intent(
-                                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                startActivityForResult(GPSSettingIntent, EXIT_GPS_ACTIVATION_CODE);
-                            }
-                        });
-        AlertDialog alert = alertDialogBuilder.create();
-        alert.show();
+        if(dialogShown){
+            //Do nothing pls
+        }else{
+            dialogShown = true;
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.AlertDialog);
+            alertDialogBuilder.setMessage("This app needs access to your GPS and it is disabled. Would you like to enable it?")
+                    .setCancelable(false)
+                    .setPositiveButton("Enable GPS",
+                            new DialogInterface.OnClickListener(){
+                                public void onClick(DialogInterface dialog, int id){
+                                    dialogShown = false;
+                                    Intent GPSSettingIntent = new Intent(
+                                            android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                    startActivityForResult(GPSSettingIntent, EXIT_GPS_ACTIVATION_CODE);
+                                }
+                            });
+            AlertDialog alert = alertDialogBuilder.create();
+            alert.show();
+        }
     }
 
     private void getDeviceLocation(){
@@ -322,12 +337,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             System.out.println("Error: " + e.getMessage());
         }
     }
-
-    /*
-    private void moveCamera(LatLng latLng, float zoom){
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
-    }
-    */
 
     private void initMap(){
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -375,21 +384,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void userChoseToNeverAskForPermissions() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
-        builder.setMessage("This app needs permission to access your location. Please set it manually.");
-        builder.setCancelable(false);
-        builder.setPositiveButton("Permit Manually", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                Intent intent = new Intent();
-                intent.setAction(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                intent.setData(uri);
-                startActivityForResult(intent, MANUAL_PERMISSION_REQUEST_CODE);
-            }
-        });
-        builder.show();
+        if(dialogShown){
+            //Do nothing pls
+        }else{
+            dialogShown = true;
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
+            builder.setMessage("This app needs permission to access your location. Please set it manually.");
+            builder.setCancelable(false);
+            builder.setPositiveButton("Permit Manually", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialogShown = false;
+                    dialog.dismiss();
+                    Intent intent = new Intent();
+                    intent.setAction(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", getPackageName(), null);
+                    intent.setData(uri);
+                    startActivityForResult(intent, MANUAL_PERMISSION_REQUEST_CODE);
+                }
+            });
+            builder.show();
+        }
     }
 
     @Override
