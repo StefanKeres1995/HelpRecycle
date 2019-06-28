@@ -12,6 +12,7 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
 import pt.ipleiria.helprecycle.common.BitmapUtils;
 import pt.ipleiria.helprecycle.common.FrameMetadata;

@@ -18,6 +18,7 @@ import android.graphics.Bitmap;
 import com.google.firebase.ml.common.FirebaseMLException;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
 /** An inferface to process the images with different ML Kit detectors and custom image models. */
 public interface VisionImageProcessor {

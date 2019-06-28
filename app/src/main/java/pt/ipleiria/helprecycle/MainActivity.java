@@ -29,6 +29,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.common.annotation.KeepName;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.vision.label.ImageLabel;
 import com.google.android.gms.vision.label.internal.client.ImageLabelerOptions;
 
@@ -37,19 +38,28 @@ import org.tensorflow.lite.Interpreter;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 
+import pt.ipleiria.helprecycle.common.CSVFile;
 import pt.ipleiria.helprecycle.common.GraphicOverlay;
+import pt.ipleiria.helprecycle.common.Singleton;
 import pt.ipleiria.helprecycle.common.VisionImageProcessor;
 import pt.ipleiria.helprecycle.gps.GPSActivity;
 
@@ -95,7 +105,7 @@ public final class MainActivity extends AppCompatActivity {
     //--------------------TENSORFLOW------------------------
 
     // presets for rgb conversion
-    private static final int RESULTS_TO_SHOW = 3;
+    private static final int RESULTS_TO_SHOW = 6;
     private static final int IMAGE_MEAN = 128;
     private static final float IMAGE_STD = 128.0f;
 
@@ -110,9 +120,9 @@ public final class MainActivity extends AppCompatActivity {
     // holds the probabilities of each label for quantized graphs
     private byte[][] labelProbArrayB = null;
     // array that holds the labels with the highest probabilities
-    private String[] topLables = null;
+    //private String[] topLables = null;
     // array that holds the highest probabilities
-    private String[] topConfidence = null;
+    //private String[] topConfidence = null;
 
     // selected classifier information received from extras
     private String chosen = "inception_quant.tflite";
@@ -125,13 +135,14 @@ public final class MainActivity extends AppCompatActivity {
     private int[] intValues;
 
 
-
+    public LinkedList<String> mlLabels = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
 
         // initialize array that holds image data
         intValues = new int[DIM_IMG_SIZE_X * DIM_IMG_SIZE_Y];
@@ -155,9 +166,9 @@ public final class MainActivity extends AppCompatActivity {
 
 
         // initialize array to hold top labels
-        topLables = new String[RESULTS_TO_SHOW];
+        //topLables = new String[RESULTS_TO_SHOW];
         // initialize array to hold top probabilities
-        topConfidence = new String[RESULTS_TO_SHOW];
+        //topConfidence = new String[RESULTS_TO_SHOW];
 
 
 
@@ -199,8 +210,8 @@ public final class MainActivity extends AppCompatActivity {
             Log.d(TAG, "graphicOverlay is null");
         }
 
-        populateFeatureSelector();
-        populateSizeSelector();
+        //populateFeatureSelector();
+        //populateSizeSelector();
 
         createImageProcessor();
 
@@ -218,7 +229,7 @@ public final class MainActivity extends AppCompatActivity {
             }
         }
     }
-
+/*
     private void populateFeatureSelector() {
         Spinner featureSpinner = (Spinner) findViewById(R.id.featureSelector);
         List<String> options = new ArrayList<>();
@@ -272,7 +283,7 @@ public final class MainActivity extends AppCompatActivity {
                     public void onNothingSelected(AdapterView<?> arg0) {}
                 });
     }
-
+*/
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -326,6 +337,7 @@ public final class MainActivity extends AppCompatActivity {
             imageUri = data.getData();
             tryReloadAndDetectInImage();
         }
+
     }
 
     @Override
@@ -379,6 +391,10 @@ public final class MainActivity extends AppCompatActivity {
             preview.setImageBitmap(resizedBitmap);
             bitmapForDetection = resizedBitmap;
 
+            InputStream inputStream = getResources().openRawResource(R.raw.label_values);
+            CSVFile csvFile = new CSVFile(inputStream);
+            HashMap<String, String> tensorflowMapValues = csvFile.read();
+
             imageProcessor.process(bitmapForDetection, graphicOverlay);
 
 
@@ -393,8 +409,15 @@ public final class MainActivity extends AppCompatActivity {
 
             tflite.run(imgData, labelProbArrayB);
 
-            // display the results
-            printTopKLabels();
+            // display the results, ordered
+            ArrayList<String> tensorflowResults = new ArrayList<>();
+            tensorflowResults = printTopKLabels();
+
+
+
+            Singleton.getInstance().setTfList(tensorflowMapValues);
+
+
 
         } catch (IOException e) {
             Log.e(TAG, "Error retrieving saved image");
@@ -563,7 +586,7 @@ public final class MainActivity extends AppCompatActivity {
     }
 
 
-    private void printTopKLabels() {
+    private ArrayList<String> printTopKLabels() {
         // add all results to priority queue
         for (int i = 0; i < labelList.size(); ++i) {
             sortedLabels.add(
@@ -575,14 +598,29 @@ public final class MainActivity extends AppCompatActivity {
         }
 
         // get top results from priority queue
+        ArrayList<String> resultsList = new ArrayList<>();
         final int size = sortedLabels.size();
+
+        HashMap<String, Float> tfResults = new HashMap<>();
         for (int i = 0; i < size; ++i) {
             Map.Entry<String, Float> label = sortedLabels.poll();
-            topLables[i] = label.getKey();
-            topConfidence[i] = String.format("%.0f%%",label.getValue()*100);
+            tfResults.put(label.getKey(), label.getValue());
+           //topConfidence[i] = String.format("%.0f%%",label.getValue()*100;
+            //resultsList.add(label.getKey());
         }
 
-    }
+        /*//reverse list
+        if (!resultsList.isEmpty()){
+            Collections.reverse(resultsList);
+        }
+        */
+        if (Singleton.getInstance().setTfLabels(tfResults) != "NOTHING"){
+            //CALL Zera
+            Intent intent = new Intent();
+            //...
+        }
 
+        return resultsList;
+    }
 
 }

@@ -1,5 +1,7 @@
 package pt.ipleiria.helprecycle;
 
+import android.Manifest;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,10 +16,12 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import pt.ipleiria.helprecycle.common.FrameMetadata;
 import pt.ipleiria.helprecycle.common.GraphicOverlay;
+import pt.ipleiria.helprecycle.common.Singleton;
 
 public class CloudImageLabelingProcessor  extends VisionProcessorBase<List<FirebaseVisionCloudLabel>> {
     private static final String TAG = "CloudImgLabelProcessor";
@@ -47,49 +51,41 @@ public class CloudImageLabelingProcessor  extends VisionProcessorBase<List<Fireb
             @NonNull GraphicOverlay graphicOverlay) {
         graphicOverlay.clear();
         Log.d(TAG, "cloud label size: " + labels.size());
-        List<String> labelsStr = new ArrayList<>();
+        HashMap<String, Float> labelsStr = new HashMap<>();
         for (int i = 0; i < labels.size(); ++i) {
             FirebaseVisionCloudLabel label = labels.get(i);
             Log.d(TAG, "cloud label: " + label);
             if (label.getLabel() != null) {
-                labelsStr.add((label.getLabel()));
+                //labelsStr.add((label.getLabel()));
+                labelsStr.put(label.getLabel(), label.getConfidence());
             }
         }
-        for (String lbl: labelsStr
+
+
+        /*for (String lbl: labelsStr
         ) {
             Log.d("Label ", lbl);
         }
+*/
 
+
+        if( Singleton.getInstance().setMlLabels(labelsStr) != "NOTHING"){
+            //CALL Zera
+            Intent intent = new Intent();
+            //...
+        }
+
+        /*
         CloudLabelGraphic cloudLabelGraphic = new CloudLabelGraphic(graphicOverlay, labelsStr);
         graphicOverlay.add(cloudLabelGraphic);
-        graphicOverlay.postInvalidate();
+        graphicOverlay.postInvalidate();*/
     }
 
     @Override
     protected void onFailure(@NonNull Exception e) {
         Log.e(TAG, "Cloud Label detection failed " + e);
     }
+
+
+
 }
-/*
-class Materials {
-
-    HashMap<String, String> recyclableMaterial = new HashMap<>();
-
-    private static final String YELLOW = "Yellow";
-    private static final String GREEN = "Green";
-    private static final String BLUE = "Blue";
-    private static final String BROWN = "Brown"; //food waste
-    private static final String RED = "Red"; //batteries
-    //private static final String TEXTILES = "Textile";
-
-    public void createMaterialList {
-
-        //Yellow
-        recyclableMaterial.put("Metal", "Yellow");
-        recyclableMaterial.put("Plastic", "Yellow");
-        recyclableMaterial.put("Paperboard", "Yellow");
-        recyclableMaterial.put("Cardboard", "Yellow");
-
-    }
-}
-*/

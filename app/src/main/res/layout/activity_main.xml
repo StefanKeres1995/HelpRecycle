@@ -30,29 +30,17 @@
     <FrameLayout
         android:id="@+id/controlPanel"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
+        android:layout_height="70dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
         android:background="#000">
-
-        <Spinner
-            android:id="@+id/featureSelector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right" />
-
-        <Spinner
-            android:id="@+id/sizeSelector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
 
         <Button
             android:id="@+id/getImageButton"
-            android:text="Take photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"/>
+            android:layout_gravity="center"
+            android:text="Take photo" />
 
     </FrameLayout>
 
