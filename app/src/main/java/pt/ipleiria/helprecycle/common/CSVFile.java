@@ -26,9 +26,7 @@ public class CSVFile {
             String csvLine;
             while ((csvLine = reader.readLine()) != null) {
                 String[] row = csvLine.split(",");
-                if (!row[1].equals("ANIMAL")){
                     resultsList.put(row[0], row[1]);
-                }
 
             }
         }

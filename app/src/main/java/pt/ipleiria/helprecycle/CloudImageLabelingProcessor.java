@@ -56,29 +56,32 @@ public class CloudImageLabelingProcessor  extends VisionProcessorBase<List<Fireb
             FirebaseVisionCloudLabel label = labels.get(i);
             Log.d(TAG, "cloud label: " + label);
             if (label.getLabel() != null) {
-                //labelsStr.add((label.getLabel()));
                 labelsStr.put(label.getLabel(), label.getConfidence());
             }
         }
-
-
-        /*for (String lbl: labelsStr
-        ) {
-            Log.d("Label ", lbl);
-        }
-*/
-
-
         if( Singleton.getInstance().setMlLabels(labelsStr) != "NOTHING"){
+
+
+
+
+
             //CALL Zera
             Intent intent = new Intent();
             //...
         }
 
-        /*
-        CloudLabelGraphic cloudLabelGraphic = new CloudLabelGraphic(graphicOverlay, labelsStr);
+        // This will display the correct answer on the screen
+        ///TODO change from CloudLabelGraphic to accept a string
+        ArrayList<String> answerList = new ArrayList<>();
+        answerList.add(Singleton.getInstance().getAnswer());
+        CloudLabelGraphic cloudLabelGraphic = new CloudLabelGraphic(graphicOverlay, answerList);
         graphicOverlay.add(cloudLabelGraphic);
-        graphicOverlay.postInvalidate();*/
+        graphicOverlay.postInvalidate();
+
+
+
+
+
     }
 
     @Override

@@ -229,61 +229,7 @@ public final class MainActivity extends AppCompatActivity {
             }
         }
     }
-/*
-    private void populateFeatureSelector() {
-        Spinner featureSpinner = (Spinner) findViewById(R.id.featureSelector);
-        List<String> options = new ArrayList<>();
-        options.add(CLOUD_LABEL_DETECTION);
-        // Creating adapter for featureSpinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, R.layout.spinner_style, options);
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // attaching data adapter to spinner
-        featureSpinner.setAdapter(dataAdapter);
-        featureSpinner.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
 
-                    @Override
-                    public void onItemSelected(
-                            AdapterView<?> parentView, View selectedItemView, int pos, long id) {
-                        selectedMode = parentView.getItemAtPosition(pos).toString();
-                        createImageProcessor();
-                        tryReloadAndDetectInImage();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> arg0) {}
-                });
-    }
-
-    private void populateSizeSelector() {
-        Spinner sizeSpinner = (Spinner) findViewById(R.id.sizeSelector);
-        List<String> options = new ArrayList<>();
-        options.add(SIZE_PREVIEW);
-        options.add(SIZE_1024_768);
-        options.add(SIZE_640_480);
-
-        // Creating adapter for featureSpinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, R.layout.spinner_style, options);
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // attaching data adapter to spinner
-        sizeSpinner.setAdapter(dataAdapter);
-        sizeSpinner.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
-
-                    @Override
-                    public void onItemSelected(
-                            AdapterView<?> parentView, View selectedItemView, int pos, long id) {
-                        selectedSize = parentView.getItemAtPosition(pos).toString();
-                        tryReloadAndDetectInImage();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> arg0) {}
-                });
-    }
-*/
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -380,6 +326,13 @@ public final class MainActivity extends AppCompatActivity {
                             (float) imageBitmap.getWidth() / (float) targetWidth,
                             (float) imageBitmap.getHeight() / (float) maxHeight);
 
+            //read all tensorflow labels from the csv
+            InputStream inputStream = getResources().openRawResource(R.raw.label_values);
+            CSVFile csvFile = new CSVFile(inputStream);
+            HashMap<String, String> tensorflowMapValues = csvFile.read();
+
+            Singleton.getInstance().setTfList(tensorflowMapValues);
+
             //----------------ML KIT ------------------
             Bitmap resizedBitmap =
                     Bitmap.createScaledBitmap(
@@ -391,9 +344,8 @@ public final class MainActivity extends AppCompatActivity {
             preview.setImageBitmap(resizedBitmap);
             bitmapForDetection = resizedBitmap;
 
-            InputStream inputStream = getResources().openRawResource(R.raw.label_values);
-            CSVFile csvFile = new CSVFile(inputStream);
-            HashMap<String, String> tensorflowMapValues = csvFile.read();
+
+
 
             imageProcessor.process(bitmapForDetection, graphicOverlay);
 
@@ -409,13 +361,11 @@ public final class MainActivity extends AppCompatActivity {
 
             tflite.run(imgData, labelProbArrayB);
 
-            // display the results, ordered
-            ArrayList<String> tensorflowResults = new ArrayList<>();
-            tensorflowResults = printTopKLabels();
+            // prepare tf results
+            printTopKLabels();
 
 
 
-            Singleton.getInstance().setTfList(tensorflowMapValues);
 
 
 
@@ -514,7 +464,10 @@ public final class MainActivity extends AppCompatActivity {
     }
 
 
-    //--------------------TENSORFLOW-------------------------------
+
+/***
+//------------------------------------TENSORFLOW----------------------------------------------
+ **/
     // priority queue that will hold the top results from the CNN
     private PriorityQueue<Map.Entry<String, Float>> sortedLabels =
             new PriorityQueue<>(
@@ -586,7 +539,7 @@ public final class MainActivity extends AppCompatActivity {
     }
 
 
-    private ArrayList<String> printTopKLabels() {
+    private void printTopKLabels() {
         // add all results to priority queue
         for (int i = 0; i < labelList.size(); ++i) {
             sortedLabels.add(
@@ -598,29 +551,33 @@ public final class MainActivity extends AppCompatActivity {
         }
 
         // get top results from priority queue
-        ArrayList<String> resultsList = new ArrayList<>();
         final int size = sortedLabels.size();
 
+        //populate results
         HashMap<String, Float> tfResults = new HashMap<>();
         for (int i = 0; i < size; ++i) {
             Map.Entry<String, Float> label = sortedLabels.poll();
             tfResults.put(label.getKey(), label.getValue());
-           //topConfidence[i] = String.format("%.0f%%",label.getValue()*100;
-            //resultsList.add(label.getKey());
         }
 
-        /*//reverse list
-        if (!resultsList.isEmpty()){
-            Collections.reverse(resultsList);
-        }
-        */
+        //only does different than nothing when either both
         if (Singleton.getInstance().setTfLabels(tfResults) != "NOTHING"){
+
+
+
             //CALL Zera
             Intent intent = new Intent();
             //...
         }
+        
+        // This will display the correct answer on the screen
+        ///TODO change from CloudLabelGraphic to accept a string
+        ArrayList<String> answerList = new ArrayList<>();
+        answerList.add(Singleton.getInstance().getAnswer());
+        CloudLabelGraphic cloudLabelGraphic = new CloudLabelGraphic(graphicOverlay, answerList);
+        graphicOverlay.add(cloudLabelGraphic);
+        graphicOverlay.postInvalidate();
 
-        return resultsList;
     }
 
 }
