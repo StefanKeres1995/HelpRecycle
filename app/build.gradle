@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "pt.ipleiria.helprecycle"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -25,6 +25,11 @@ android {
     aaptOptions {
         noCompress "tflite"
         noCompress "lite"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
 }
@@ -55,7 +60,30 @@ dependencies {
     implementation 'com.google.apis:google-api-services-vision:v1-rev376-1.23.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
 
-    implementation  'com.google.maps.android:android-maps-utils:0.5+'
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
 
+    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.5.1'
 }
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.ar.sceneform.plugin'
+
+
+sceneform.asset('sampledata/arrow/arrow.obj',
+        'default',
+        'sampledata/arrow/arrow.sfa',
+        'src/main/assets/arrow')
+
+sceneform.asset('sampledata/glass/glass.obj',
+        'default',
+        'sampledata/glass/glass.sfa',
+        'src/main/assets/glass')
+
+sceneform.asset('sampledata/paper/paper.obj',
+        'default',
+        'sampledata/paper/paper.sfa',
+        'src/main/assets/paper')
+
+sceneform.asset('sampledata/plastic/plastic.obj',
+        'default',
+        'sampledata/plastic/plastic.sfa',
+        'src/main/assets/plastic')

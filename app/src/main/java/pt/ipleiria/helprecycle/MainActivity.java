@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 
+import pt.ipleiria.helprecycle.ARCode.ArActivity;
 import pt.ipleiria.helprecycle.common.CSVFile;
 import pt.ipleiria.helprecycle.common.GraphicOverlay;
 import pt.ipleiria.helprecycle.common.Singleton;
@@ -525,14 +526,7 @@ public final class MainActivity extends AppCompatActivity {
         }
 
         //only does different than nothing when either both
-        if (Singleton.getInstance().setTfLabels(tfResults) != "NOTHING"){
-
-
-
-            //CALL Zera
-            Intent intent = new Intent();
-            //...
-        }
+        Singleton.getInstance().setTfLabels(tfResults);
 
         // This will display the correct answer on the screen
         ///TODO change from CloudLabelGraphic to accept a string
@@ -542,6 +536,18 @@ public final class MainActivity extends AppCompatActivity {
         graphicOverlay.add(cloudLabelGraphic);
         graphicOverlay.postInvalidate();
 
-    }
 
+        do{
+            try {
+                Toast.makeText(this, "Waiting for MLKit.", Toast.LENGTH_SHORT).show();
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }while(!Singleton.getInstance().checkIfBothMLArrived());
+
+
+        Intent intent = new Intent(getBaseContext(), ArActivity.class);
+        startActivity(intent);
+    }
 }
