@@ -61,7 +61,6 @@ import pt.ipleiria.helprecycle.common.CSVFile;
 import pt.ipleiria.helprecycle.common.GraphicOverlay;
 import pt.ipleiria.helprecycle.common.Singleton;
 import pt.ipleiria.helprecycle.common.VisionImageProcessor;
-import pt.ipleiria.helprecycle.gps.GPSActivity;
 
 @KeepName
 public final class MainActivity extends AppCompatActivity {
@@ -135,14 +134,12 @@ public final class MainActivity extends AppCompatActivity {
     private int[] intValues;
 
 
-    public LinkedList<String> mlLabels = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
 
         // initialize array that holds image data
         intValues = new int[DIM_IMG_SIZE_X * DIM_IMG_SIZE_Y];
@@ -283,7 +280,6 @@ public final class MainActivity extends AppCompatActivity {
             imageUri = data.getData();
             tryReloadAndDetectInImage();
         }
-
     }
 
     @Override
@@ -344,9 +340,6 @@ public final class MainActivity extends AppCompatActivity {
             preview.setImageBitmap(resizedBitmap);
             bitmapForDetection = resizedBitmap;
 
-
-
-
             imageProcessor.process(bitmapForDetection, graphicOverlay);
 
 
@@ -363,11 +356,6 @@ public final class MainActivity extends AppCompatActivity {
 
             // prepare tf results
             printTopKLabels();
-
-
-
-
-
 
         } catch (IOException e) {
             Log.e(TAG, "Error retrieving saved image");
@@ -456,7 +444,8 @@ public final class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.item_gps:
-                Intent gpsActivity = new Intent(this, GPSActivity.class);
+                //Intent gpsActivity = new Intent(this, GPSActivity.class);
+                Intent gpsActivity = new Intent (this, MapsActivity.class);
                 startActivity(gpsActivity);
             default:
                 return super.onOptionsItemSelected(item);
@@ -569,7 +558,7 @@ public final class MainActivity extends AppCompatActivity {
             Intent intent = new Intent();
             //...
         }
-        
+
         // This will display the correct answer on the screen
         ///TODO change from CloudLabelGraphic to accept a string
         ArrayList<String> answerList = new ArrayList<>();
