@@ -16,7 +16,6 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 import pt.ipleiria.helprecycle.common.FrameMetadata;

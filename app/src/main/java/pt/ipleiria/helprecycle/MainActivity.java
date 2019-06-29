@@ -20,18 +20,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.common.annotation.KeepName;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.vision.label.ImageLabel;
-import com.google.android.gms.vision.label.internal.client.ImageLabelerOptions;
 
 import org.tensorflow.lite.Interpreter;
 
@@ -40,19 +34,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -118,11 +107,6 @@ public final class MainActivity extends AppCompatActivity {
     private ByteBuffer imgData = null;
     // holds the probabilities of each label for quantized graphs
     private byte[][] labelProbArrayB = null;
-    // array that holds the labels with the highest probabilities
-    //private String[] topLables = null;
-    // array that holds the highest probabilities
-    //private String[] topConfidence = null;
-
     // selected classifier information received from extras
     private String chosen = "inception_quant.tflite";
     // input image dimensions for the Inception Model
@@ -160,12 +144,6 @@ public final class MainActivity extends AppCompatActivity {
 
         // initialize probabilities array. The datatypes that array holds the input data needs to be quantized
         labelProbArrayB= new byte[1][labelList.size()];
-
-
-        // initialize array to hold top labels
-        //topLables = new String[RESULTS_TO_SHOW];
-        // initialize array to hold top probabilities
-        //topConfidence = new String[RESULTS_TO_SHOW];
 
 
 
@@ -206,9 +184,6 @@ public final class MainActivity extends AppCompatActivity {
         if (graphicOverlay == null) {
             Log.d(TAG, "graphicOverlay is null");
         }
-
-        //populateFeatureSelector();
-        //populateSizeSelector();
 
         createImageProcessor();
 
