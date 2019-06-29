@@ -129,13 +129,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             dialogShown = true;
             final AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
             if(i){
-                builder.setMessage("You're in range bro!!!")
+                builder.setMessage("You're in range")
                         .setCancelable(true)
                         .setPositiveButton("Take me to andre's activity", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //intent to andre's Activity!!!
                                 dialogShown = false;
+                                dialog.dismiss();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -143,6 +144,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             public void onClick(DialogInterface dialog, int which) {
                                 dialogShown = false;
                                 dialog.cancel();
+                                dialog.dismiss();
                             }
                         });
             }else{
