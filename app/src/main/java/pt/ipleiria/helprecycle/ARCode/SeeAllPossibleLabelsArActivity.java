@@ -3,8 +3,8 @@ package pt.ipleiria.helprecycle.ARCode;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -38,9 +38,9 @@ import pt.ipleiria.helprecycle.MainActivity;
 import pt.ipleiria.helprecycle.R;
 import pt.ipleiria.helprecycle.common.Singleton;
 
-public class SelectedOneLabelArActivity extends AppCompatActivity {
+public class SeeAllPossibleLabelsArActivity extends AppCompatActivity {
 
-    private static final String TAG = SelectedOneLabelArActivity.class.getSimpleName();
+    private static final String TAG = SeeAllPossibleLabelsArActivity.class.getSimpleName();
 
     // Rendering. The Renderers are created here, and initialized when the GL surface is created.
     private ArSceneView arSceneView;
@@ -58,7 +58,7 @@ public class SelectedOneLabelArActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_ar);
+        setContentView(R.layout.activity_ar);
 
         arSceneView = findViewById(R.id.surfaceview);
 
@@ -188,36 +188,22 @@ public class SelectedOneLabelArActivity extends AppCompatActivity {
         //For each image recognized
         for (AugmentedImage augmentedImage : updatedAugmentedImages) {
             if (augmentedImage.getTrackingState() == TrackingState.TRACKING) {
-                String filename = "arrow.sfb";
                 AugmentedImageNode node = null;
                 switch(augmentedImage.getName()){
                     case "yellow":
-                        if(augmentedImage.getName().equals(Singleton.getInstance().getAnswer().toLowerCase())) {
-                            node = new AugmentedImageNode(this, filename);
-                            node.setImageArrow(augmentedImage);
-                            Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            Toast.makeText(this, "Not Yellow", Toast.LENGTH_SHORT).show();
-                        }
+                        node = new AugmentedImageNode(this, "plastic.sfb");
+                        node.setImageArrow(augmentedImage);
+                        Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
                         break;
                     case "blue":
-                        if(augmentedImage.getName().equals(Singleton.getInstance().getAnswer().toLowerCase())) {
-                            node = new AugmentedImageNode(this, filename);
-                            node.setImageArrow(augmentedImage);
-                            Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(this, "Not Blue", Toast.LENGTH_SHORT).show();
-                        }
+                        node = new AugmentedImageNode(this, "paper.sfb");
+                        node.setImageArrow(augmentedImage);
+                        Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
                         break;
                     case "green":
-                        if(augmentedImage.getName().equals(Singleton.getInstance().getAnswer().toLowerCase())) {
-                            node = new AugmentedImageNode(this, filename);
-                            node.setImageArrow(augmentedImage);
-                            Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(this, "Not Green", Toast.LENGTH_SHORT).show();
-                        }
+                        node = new AugmentedImageNode(this, "glass.sfb");
+                        node.setImageArrow(augmentedImage);
+                        Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         break;
@@ -273,6 +259,13 @@ public class SelectedOneLabelArActivity extends AppCompatActivity {
     public void backButton(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        Singleton.getInstance().resetAnswer();
         this.finish();
+    }
+
+    public void reloadActivitiyOnClick(View view) {
+        Intent intent = new Intent(this, SeeAllPossibleLabelsArActivity.class);
+        this.finish();
+        startActivity(intent);
     }
 }

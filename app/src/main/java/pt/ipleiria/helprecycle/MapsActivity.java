@@ -40,9 +40,11 @@ import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.ArrayList;
 
+import pt.ipleiria.helprecycle.ARCode.SelectedOneLabelArActivity;
 import pt.ipleiria.helprecycle.Maps.ClusterManagerRenderer;
 import pt.ipleiria.helprecycle.Maps.ClusterMarker;
 import pt.ipleiria.helprecycle.Maps.RecycleBin;
+import pt.ipleiria.helprecycle.common.Singleton;
 
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -129,38 +131,51 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             dialogShown = true;
             final AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
             if(i){
-                builder.setMessage("You're in range")
+                builder.setMessage("You're in range. What do you wish to do?")
                         .setCancelable(true)
-                        .setPositiveButton("Take me to andre's activity", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //intent to andre's Activity!!!
-                                dialogShown = false;
-                                dialog.dismiss();
-                            }
+                        .setPositiveButton("Analyze!", (dialog, which) -> {
+                            dialog.dismiss();
+                            dismiss();
                         })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialogShown = false;
-                                dialog.cancel();
-                                dialog.dismiss();
+                        .setNegativeButton("I've already Analyzed", (dialog, which) -> {
+                            dialogShown = false;
+                            dialog.cancel();
+                            dialog.dismiss();
+                            if(Singleton.getInstance().getAnswer().equals("NOTHING")){
+                                final AlertDialog.Builder anotherBuilding = new AlertDialog.Builder(MapsActivity.this);
+                                anotherBuilding.setMessage("You have nothing Analyzed")
+                                        .setCancelable(true)
+                                        .setPositiveButton("Understood", (dialog1, which1) -> {
+                                            dialogShown = false;
+                                            dialog.dismiss();
+                                        });
+                                final AlertDialog alert2 = anotherBuilding.create();
+                                alert2.show();
+                            }else{
+                                Intent intentPrevious = new Intent(this, MainActivity.class);
+                                startActivity(intentPrevious);
+                                Intent intentCurrent = new Intent(this, SelectedOneLabelArActivity.class);
+                                startActivity(intentCurrent);
+                                this.finish();
                             }
                         });
             }else{
                 builder.setMessage("You're too far from this recycling station. Get closer!")
                         .setCancelable(true)
-                        .setPositiveButton("Understood", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialogShown = false;
-                                dialog.dismiss();
-                            }
+                        .setPositiveButton("Understood", (dialog, which) -> {
+                            dialogShown = false;
+                            dialog.dismiss();
                         });
             }
             final AlertDialog alert = builder.create();
             alert.show();
         }
+    }
+
+    private void dismiss(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 
     private void drawCircle(LatLng point){

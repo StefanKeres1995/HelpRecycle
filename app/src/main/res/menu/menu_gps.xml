@@ -10,4 +10,13 @@
         android:title="button_gps"
         android:visible="true"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/analyze"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher_foreground"
+        android:title="analyze"
+        android:visible="true"
+        app:showAsAction="always" />
 </menu>

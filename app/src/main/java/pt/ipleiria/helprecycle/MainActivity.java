@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 
+import pt.ipleiria.helprecycle.ARCode.SeeAllPossibleLabelsArActivity;
 import pt.ipleiria.helprecycle.ARCode.SelectedOneLabelArActivity;
 import pt.ipleiria.helprecycle.common.CSVFile;
 import pt.ipleiria.helprecycle.common.GraphicOverlay;
@@ -418,14 +419,21 @@ public final class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.item_gps:
-                //Intent gpsActivity = new Intent(this, GPSActivity.class);
-                Intent gpsActivity = new Intent (this, MapsActivity.class);
-                startActivity(gpsActivity);
+                intent = new Intent (this, MapsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.analyze:
+                intent = new Intent (this, SeeAllPossibleLabelsArActivity.class);
+                startActivity(intent);
+                this.finish();
+                break;
             default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 
