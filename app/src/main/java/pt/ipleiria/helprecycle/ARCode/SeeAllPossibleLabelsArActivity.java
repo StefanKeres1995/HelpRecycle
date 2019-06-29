@@ -65,6 +65,8 @@ public class SeeAllPossibleLabelsArActivity extends AppCompatActivity {
         installRequested = false;
 
         initializeSceneView();
+
+        Toast.makeText(this, "This Functionality is currently Bugged. In order to use it, you should scan an object and close/open the app.", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -192,17 +194,17 @@ public class SeeAllPossibleLabelsArActivity extends AppCompatActivity {
                 switch(augmentedImage.getName()){
                     case "yellow":
                         node = new AugmentedImageNode(this, "plastic.sfb");
-                        node.setImageArrow(augmentedImage);
+                        node.setImage(augmentedImage);
                         Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
                         break;
                     case "blue":
                         node = new AugmentedImageNode(this, "paper.sfb");
-                        node.setImageArrow(augmentedImage);
+                        node.setImage(augmentedImage);
                         Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
                         break;
                     case "green":
                         node = new AugmentedImageNode(this, "glass.sfb");
-                        node.setImageArrow(augmentedImage);
+                        node.setImage(augmentedImage);
                         Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
                         break;
                     default:
