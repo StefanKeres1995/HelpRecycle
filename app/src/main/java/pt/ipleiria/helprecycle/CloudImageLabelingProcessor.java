@@ -58,24 +58,16 @@ public class CloudImageLabelingProcessor  extends VisionProcessorBase<List<Fireb
                 labelsStr.put(label.getLabel(), label.getConfidence());
             }
         }
-        if( Singleton.getInstance().setMlLabels(labelsStr) != "NOTHING"){
+        Singleton.getInstance().setMlLabels(labelsStr);
 
 
-
-
-
-            //CALL Zera
-            Intent intent = new Intent();
-            //...
-        }
-
-        // This will display the correct answer on the screen
+        /*// This will display the correct answer on the screen
         ///TODO change from CloudLabelGraphic to accept a string
         ArrayList<String> answerList = new ArrayList<>();
         answerList.add(Singleton.getInstance().getAnswer());
         CloudLabelGraphic cloudLabelGraphic = new CloudLabelGraphic(graphicOverlay, answerList);
         graphicOverlay.add(cloudLabelGraphic);
-        graphicOverlay.postInvalidate();
+        graphicOverlay.postInvalidate();*/
 
 
 

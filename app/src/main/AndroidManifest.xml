@@ -26,8 +26,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:screenOrientation="locked"
         android:theme="@style/AppTheme">
-        <activity android:name=".ARCode.ArActivity"></activity>
+
+        <activity android:name=".ARCode.SelectedOneLabelArActivity"
+            android:screenOrientation="portrait"></activity>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

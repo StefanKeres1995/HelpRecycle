@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ARCode.ArActivity">
+    android:orientation="vertical"
+    tools:context=".ARCode.SelectedOneLabelArActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:onClick="backButton"
+        android:text="Back Button" />
+
+    <com.google.ar.sceneform.ArSceneView
+        android:id="@+id/surfaceview"
+        android:layout_width="match_parent"
+        android:layout_height="653dp" />
+
+</LinearLayout>

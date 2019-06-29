@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-import pt.ipleiria.helprecycle.ARCode.ArActivity;
+import pt.ipleiria.helprecycle.ARCode.SelectedOneLabelArActivity;
 import pt.ipleiria.helprecycle.common.CSVFile;
 import pt.ipleiria.helprecycle.common.GraphicOverlay;
 import pt.ipleiria.helprecycle.common.Singleton;
@@ -528,26 +528,27 @@ public final class MainActivity extends AppCompatActivity {
         //only does different than nothing when either both
         Singleton.getInstance().setTfLabels(tfResults);
 
-        // This will display the correct answer on the screen
+        /*// This will display the correct answer on the screen
         ///TODO change from CloudLabelGraphic to accept a string
         ArrayList<String> answerList = new ArrayList<>();
         answerList.add(Singleton.getInstance().getAnswer());
         CloudLabelGraphic cloudLabelGraphic = new CloudLabelGraphic(graphicOverlay, answerList);
         graphicOverlay.add(cloudLabelGraphic);
-        graphicOverlay.postInvalidate();
+        graphicOverlay.postInvalidate();*/
 
 
         do{
             try {
                 Toast.makeText(this, "Waiting for MLKit.", Toast.LENGTH_SHORT).show();
-                Thread.sleep(100);
+                Thread.sleep(400);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }while(!Singleton.getInstance().checkIfBothMLArrived());
+        }while(Singleton.getInstance().checkIfBothMLArrived());
 
-
-        Intent intent = new Intent(getBaseContext(), ArActivity.class);
+        Intent intent = new Intent(getBaseContext(), SelectedOneLabelArActivity.class);
         startActivity(intent);
+        super.finish();
+
     }
 }

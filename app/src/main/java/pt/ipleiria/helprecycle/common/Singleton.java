@@ -238,7 +238,6 @@ public class Singleton {
         return highestKey;
     }
 
-
     private float mediumConfidence (List<Float> valuesList){
         if (!valuesList.isEmpty()){
             float sum = 0;
