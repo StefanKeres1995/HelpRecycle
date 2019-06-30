@@ -40,6 +40,11 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.PendingResult;
@@ -54,6 +59,7 @@ import java.util.List;
 import pt.ipleiria.helprecycle.ARCode.SelectedOneLabelArActivity;
 import pt.ipleiria.helprecycle.Maps.ClusterManagerRenderer;
 import pt.ipleiria.helprecycle.Maps.ClusterMarker;
+import pt.ipleiria.helprecycle.Maps.GPSCoordinates;
 import pt.ipleiria.helprecycle.Maps.RecycleBin;
 import pt.ipleiria.helprecycle.common.PolylineData;
 import pt.ipleiria.helprecycle.common.Singleton;
@@ -83,6 +89,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Location currentLocation;
     private LocationManager locationManager;
     private ArrayList<RecycleBin> recycleBins = new ArrayList<>();
+    private Boolean alreadyAddedPosition = false;
+
+
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference reference;
 
 
     private boolean dialogShown = false;
@@ -95,6 +106,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(mGeoApiContext == null){
             mGeoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.google_api_key)).build();
         }
+
         populateRecycleBins();
 
         getLocationPermission();
@@ -110,7 +122,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //Testando com limites de Zoom
         mMap.setMinZoomPreference(16f);
         mMap.getUiSettings().setMapToolbarEnabled(false);
-        addMapMarkers();
+        if(!recycleBins.isEmpty() && !alreadyAddedPosition){
+            addMapMarkers();
+            alreadyAddedPosition = true;
+        }
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
@@ -305,7 +320,35 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void populateRecycleBins(){
-        //Valor obtido através do website: http://mapasonline.cm-leiria.pt/MuniSIGInter/Html5Viewer/index.html?viewer=Gesto_de_Resduos_Urbanos_e_Higiene_Pblica.Gesto_Resduos_Urbanos_e_Higiene_Pblica&fbclid=IwAR38eDZqi04ICOM8UTimqg8AAs9PvHayejVr9l_FFITE5UlbyN9qduGe5XM
+        reference = database.getReference("points");
+        //Read from database
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                GPSCoordinates coordinates;
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    coordinates = postSnapshot.getValue(GPSCoordinates.class);
+                    if(coordinates == null){
+                        //Ignore
+                    }else{
+                        recycleBins.add(new RecycleBin(coordinates.getName(), new LatLng(coordinates.getLatitude(), coordinates.getLongitude())));
+                    }
+                }
+
+                if(!alreadyAddedPosition){
+                    addMapMarkers();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //Nothing;
+            }
+        });
+
+        /* //Valor obtido através do website: http://mapasonline.cm-leiria.pt/MuniSIGInter/Html5Viewer/index.html?viewer=Gesto_de_Resduos_Urbanos_e_Higiene_Pblica.Gesto_Resduos_Urbanos_e_Higiene_Pblica&fbclid=IwAR38eDZqi04ICOM8UTimqg8AAs9PvHayejVr9l_FFITE5UlbyN9qduGe5XM
         //ESTG
         recycleBins.add(new RecycleBin("ESTG Automóvel", new LatLng(39.73313, -8.82109)));
         recycleBins.add(new RecycleBin("ESTG Cantina 3", new LatLng(39.734689, -8.822158)));
@@ -317,7 +360,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 //My House
                 //new LatLng(39.756517, -8.779753),))
-        recycleBins.add(new RecycleBin("Rodrigo House #2",new LatLng(39.756517, -8.779753)));
+        recycleBins.add(new RecycleBin("Rodrigo House #2",new LatLng(39.756517, -8.779753)));*/
+
+
     }
 
     private void verifyAndGetGPS() {

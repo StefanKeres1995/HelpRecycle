@@ -37,6 +37,7 @@
     file: 'sampledata/plastic/plastic.obj',
     name: 'plastic',
     recenter: 'root',
+    scale: 0.08811500000000001,
   },
   samplers: [
     {

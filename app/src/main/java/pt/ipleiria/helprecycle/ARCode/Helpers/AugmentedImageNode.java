@@ -31,18 +31,12 @@ public class AugmentedImageNode extends AnchorNode {
         }
     }
 
-    /**
-     * Called when the AugmentedImage is detected and should be rendered. A Sceneform node tree is
-     * created based on an Anchor created from the image.
-     *
-     * @param image captured by your camera
-     */
-    public void setImage(AugmentedImage image) {
+    public void setImagePlastic(AugmentedImage image) {
         this.image = image;
 
         if (!modelFuture.isDone()) {
             CompletableFuture.allOf(modelFuture).thenAccept((Void aVoid) -> {
-                setImage(image);
+                setImagePlastic(image);
             }).exceptionally(throwable -> {
                 Log.e(TAG, "Exception loading", throwable);
                 return null;
@@ -57,9 +51,7 @@ public class AugmentedImageNode extends AnchorNode {
 
         node.setParent(this);
         node.setLocalPosition(new Vector3(pose.tx(), pose.ty(), pose.tz()));
-//        node.setLocalPosition(new Vector3(, 0f, 0f));
-        node.setLocalRotation(new Quaternion(pose.qx(), pose.qy(), pose.qz(), pose.qw()));
-//        node.setLocalRotation(new Quaternion(0f, 0f, 0f, 0f));
+        node.setWorldRotation(new Quaternion(pose.qx(), pose.qy() + 180, pose.qz(), pose.qw()));
         node.setLocalScale(new Vector3(1f, 1f, 1f));
         node.setRenderable(modelFuture.getNow(null));
     }
@@ -84,12 +76,62 @@ public class AugmentedImageNode extends AnchorNode {
 
         node.setParent(this);
         node.setLocalPosition(new Vector3(pose.tx(), pose.ty(), pose.tz() - 0.1f));
-        node.setLocalRotation(new Quaternion(pose.qx() + 270f, pose.qy() + 180f, pose.qz(), pose.qw()));
+        node.setLocalRotation(new Quaternion(pose.qx() + 180f, pose.qy(), pose.qz(), pose.qw()));
         node.setLocalScale(new Vector3(1f, 1f, 1f));
         node.setRenderable(modelFuture.getNow(null));
     }
 
     public AugmentedImage getImage() {
         return image;
+    }
+
+    public void setImageGlass(AugmentedImage image) {
+        this.image = image;
+
+        if (!modelFuture.isDone()) {
+            CompletableFuture.allOf(modelFuture).thenAccept((Void aVoid) -> {
+                setImageGlass(image);
+            }).exceptionally(throwable -> {
+                Log.e(TAG, "Exception loading", throwable);
+                return null;
+            });
+        }
+
+        setAnchor(image.createAnchor(image.getCenterPose()));
+
+        Node node = new Node();
+
+        Pose pose = Pose.makeTranslation(0.0f, 0.0f, 0.010f);
+
+        node.setParent(this);
+        node.setLocalPosition(new Vector3(pose.tx(), pose.ty(), pose.tz()));
+        node.setWorldRotation(new Quaternion(pose.qx(), pose.qy() + 180, pose.qz(), pose.qw()));
+        node.setLocalScale(new Vector3(0.3f, 0.3f, 0.3f));
+        node.setRenderable(modelFuture.getNow(null));
+    }
+
+    public void setImagePaper(AugmentedImage image) {
+        this.image = image;
+
+        if (!modelFuture.isDone()) {
+            CompletableFuture.allOf(modelFuture).thenAccept((Void aVoid) -> {
+                setImageGlass(image);
+            }).exceptionally(throwable -> {
+                Log.e(TAG, "Exception loading", throwable);
+                return null;
+            });
+        }
+
+        setAnchor(image.createAnchor(image.getCenterPose()));
+
+        Node node = new Node();
+
+        Pose pose = Pose.makeTranslation(0.0f, 0.0f, 0.010f);
+
+        node.setParent(this);
+        node.setLocalPosition(new Vector3(pose.tx(), pose.ty(), pose.tz()));
+        node.setWorldRotation(new Quaternion(pose.qx(), pose.qy() + 270, pose.qz() + 270, pose.qw()));
+        node.setLocalScale(new Vector3(0.3f, 0.3f, 0.3f));
+        node.setRenderable(modelFuture.getNow(null));
     }
 }

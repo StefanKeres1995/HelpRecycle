@@ -37,6 +37,7 @@
     file: 'sampledata/paper/paper.obj',
     name: 'paper',
     recenter: 'root',
+    scale: 5,
   },
   version: '0.54:2',
 }

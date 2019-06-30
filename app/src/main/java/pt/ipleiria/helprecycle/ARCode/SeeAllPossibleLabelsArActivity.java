@@ -194,18 +194,18 @@ public class SeeAllPossibleLabelsArActivity extends AppCompatActivity {
                 switch(augmentedImage.getName()){
                     case "yellow":
                         node = new AugmentedImageNode(this, "plastic.sfb");
-                        node.setImage(augmentedImage);
-                        Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+                        node.setImagePlastic(augmentedImage);
+                        Toast.makeText(this, "Yellow Bin!", Toast.LENGTH_SHORT).show();
                         break;
                     case "blue":
                         node = new AugmentedImageNode(this, "paper.sfb");
-                        node.setImage(augmentedImage);
-                        Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+                        node.setImagePaper(augmentedImage);
+                        Toast.makeText(this, "Blue Bin!", Toast.LENGTH_SHORT).show();
                         break;
                     case "green":
                         node = new AugmentedImageNode(this, "glass.sfb");
-                        node.setImage(augmentedImage);
-                        Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+                        node.setImageGlass(augmentedImage);
+                        Toast.makeText(this, "Green Bin!", Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         break;

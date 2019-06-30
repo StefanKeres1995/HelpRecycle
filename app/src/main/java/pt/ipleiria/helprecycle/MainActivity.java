@@ -70,7 +70,7 @@ public final class MainActivity extends AppCompatActivity {
     private static final String KEY_IMAGE_MAX_HEIGHT =
             "com.googletest.firebase.ml.demo.KEY_IMAGE_MAX_HEIGHT";
     private static final String KEY_SELECTED_SIZE =
-            "com.googletest.firebase.ml.demo.KEY_SELECTED_SIZE";
+            "com.googletest.firebase.ml.demo.KEY_SELECTED_SIZEfirebase.ml.demo.KEY_SELECTED_SIZE";
 
     private static final int REQUEST_IMAGE_CAPTURE = 1001;
     private static final int REQUEST_CHOOSE_IMAGE = 1002;
@@ -438,7 +438,6 @@ public final class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 
 /***

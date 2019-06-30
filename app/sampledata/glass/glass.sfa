@@ -37,7 +37,7 @@
     file: 'sampledata/glass/glass.obj',
     name: 'glass',
     recenter: 'root',
-    scale: 0.78811500000000001,
+    scale: 0.08811500000000001,
   },
   samplers: [
     {

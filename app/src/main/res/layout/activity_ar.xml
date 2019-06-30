@@ -5,43 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ARCode.SelectedOneLabelArActivity">
+    tools:context=".ARCode.SeeAllPossibleLabelsArActivity">
 
     <com.google.ar.sceneform.ArSceneView
         android:id="@+id/surfaceview"
         android:layout_width="match_parent"
-        android:layout_height="653dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/Reset"
+        app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="-16dp" />
 
     <Button
         android:id="@+id/Reset"
-        android:layout_width="157dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="180dp"
+        android:layout_height="45dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
         android:onClick="reloadActivitiyOnClick"
         android:text="Reload"
-        app:layout_constraintBottom_toTopOf="@+id/surfaceview"
         app:layout_constraintEnd_toEndOf="@+id/surfaceview"
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="157dp"
-        android:layout_height="47dp"
+        android:layout_width="180dp"
+        android:layout_height="45dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:onClick="backButton"
         android:text="Back Button"
+        app:layout_constraintEnd_toStartOf="@+id/Reset"
         app:layout_constraintStart_toStartOf="@+id/surfaceview"
         app:layout_constraintTop_toTopOf="parent" />
 
