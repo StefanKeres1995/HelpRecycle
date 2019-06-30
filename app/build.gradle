@@ -72,6 +72,7 @@ dependencies {
     implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.4.0'
     implementation 'com.android.support:design:27.1.1'
 
+
     //Google Directions, find latest version here: https://search.maven.org/search?q=a:google-maps-services
     implementation 'com.google.maps:google-maps-services:0.9.3'
     implementation 'org.slf4j:slf4j-simple:1.7.25'
