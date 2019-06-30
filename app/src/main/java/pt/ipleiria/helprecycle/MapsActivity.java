@@ -51,7 +51,7 @@ import pt.ipleiria.helprecycle.Maps.RecycleBin;
 import pt.ipleiria.helprecycle.common.Singleton;
 
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnPolylineClickListener {
 
     private GoogleMap mMap;
 
@@ -68,10 +68,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ArrayList<ClusterMarker> mClusterMarkers = new ArrayList<>();
     private LatLngBounds mMapBoundary;
     private GeoApiContext mGeoApiContext = null;
+    private ArrayList<PolylineData> mPolylineData = new ArrayList<>();
+    private Marker mSelectedMarker = null;
+    private ArrayList<Marker> mDestinationMarkers = new ArrayList<>();
 
     private Location currentLocation;
     private LocationManager locationManager;
     private ArrayList<RecycleBin> recycleBins = new ArrayList<>();
+
 
     private boolean dialogShown = false;
 
@@ -93,6 +97,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnPolylineClickListener(this);
 
         //Testando com limites de Zoom
         mMap.setMinZoomPreference(16f);
@@ -102,6 +107,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onInfoWindowClick(Marker marker) {
                 boolean inRange;
+                resetSelectedMarker();
+                mSelectedMarker = marker;
 
                 Location markerLocation = new Location("MarkerLocation");
                 markerLocation.setLatitude(marker.getPosition().latitude);
@@ -123,6 +130,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         verifyAndGetGPS();
+    }
+
+    private void removeUnusedMarkers(){
+        for(Marker m: mDestinationMarkers){
+            m.remove();
+        }
+    }
+
+    private void resetSelectedMarker(){
+        if(mSelectedMarker != null){
+            mSelectedMarker.setVisible(true);
+            mSelectedMarker = null;
+            removeUnusedMarkers();
+        }
     }
 
     //If the user is in range, It will let the user play!
@@ -284,9 +305,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 //My House 2
                 //new LatLng(39.75607, -8.77968),
+        recycleBins.add(new RecycleBin("Rodrigo House #1",new LatLng(39.75607, -8.77968)));
 
                 //My House
                 //new LatLng(39.756517, -8.779753),))
+        recycleBins.add(new RecycleBin("Rodrigo House #2",new LatLng(39.756517, -8.779753)));
     }
 
     private void verifyAndGetGPS() {
@@ -379,7 +402,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         );
         DirectionsApiRequest directions = new DirectionsApiRequest(mGeoApiContext);
 
+        //Determina mais do que uma rota
         //directions.alternatives(true);
+        directions.alternatives(false);
 
         //Determine origin
         directions.origin(
@@ -395,7 +420,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 System.out.println("calculateDirections: duration: " + result.routes[0].legs[0].duration);
                 System.out.println("calculateDirections: distance: " + result.routes[0].legs[0].distance);
                 System.out.println("calculateDirections: geocodedWayPoints: " + result.geocodedWaypoints[0].toString());
-
+                //ACTUAL METHOD, LIMITED API CALLS
+                addPolylinesToMap(result);
             }
 
             @Override
@@ -403,6 +429,46 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 System.out.println("calculateDirections: Failed to get directions: " + e.getMessage());
             }
         });
+    }
+
+    private void addPolylinesToMap(final DirectionsResult result){
+        new Handler(Looper.getMainLooper()).post(() -> {
+            System.out.println("run: result routes: " + result.routes.length);
+            if(mPolylineData.size() > 0){
+                for(PolylineData p: mPolylineData){
+                    p.getPolyline().remove();
+                }
+                mPolylineData.clear();
+                mPolylineData = new ArrayList<>();
+            }
+
+            //ACTUAL METHOD
+            for(DirectionsRoute route: result.routes){
+                System.out.println("run: leg: " + route.legs[0].toString());
+                List<com.google.maps.model.LatLng> decodedPath = PolylineEncoding.decode(route.overviewPolyline.getEncodedPath());
+
+                List<LatLng> newDecodedPath = new ArrayList<>();
+
+                for(com.google.maps.model.LatLng latLng: decodedPath){
+                    newDecodedPath.add(new LatLng(
+                            latLng.lat,
+                            latLng.lng
+                    ));
+                }
+
+                Polyline polyline = mMap.addPolyline(new PolylineOptions().addAll(newDecodedPath));
+
+                polyline.setColor(ContextCompat.getColor(MapsActivity.this, R.color.Blue));
+                polyline.setClickable(true);
+                mPolylineData.add(new PolylineData(polyline, route.legs[0]));
+
+                onPolylineClick(polyline);
+                zoomRoute(polyline.getPoints());
+
+                mSelectedMarker.setVisible(false);
+            }
+        });
+
     }
 
     private void getLocationPermission(){
@@ -557,4 +623,51 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
     };
+
+    public void zoomRoute(List<LatLng> lstLatLngRoute) {
+
+        if (mMap == null || lstLatLngRoute == null || lstLatLngRoute.isEmpty()) return;
+
+        LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
+        for (LatLng latLngPoint : lstLatLngRoute)
+            boundsBuilder.include(latLngPoint);
+
+        int routePadding = 120;
+        LatLngBounds latLngBounds = boundsBuilder.build();
+
+        mMap.animateCamera(
+                CameraUpdateFactory.newLatLngBounds(latLngBounds, routePadding),
+                600,
+                null
+        );
+    }
+
+    @Override
+    public void onPolylineClick(Polyline polyline) {
+        for(PolylineData polylineData: mPolylineData){
+            if(polyline.getId().equals(polylineData.getPolyline().getId())){
+                polylineData.getPolyline().setColor(ContextCompat.getColor(MapsActivity.this, R.color.Blue));
+                polylineData.getPolyline().setZIndex(1);
+
+                LatLng destinationMarker = new LatLng(
+                        polylineData.getLeg().endLocation.lat,
+                        polylineData.getLeg().endLocation.lng
+                );
+
+                Marker marker = mMap.addMarker(new MarkerOptions()
+                        .position(destinationMarker)
+                        .title("Destination")
+                        .snippet("Duration; " + polylineData.getLeg().duration)
+                );
+
+                marker.showInfoWindow();
+
+                mDestinationMarkers.add(marker);
+            }
+            else{
+                polylineData.getPolyline().setColor(ContextCompat.getColor(MapsActivity.this, R.color.Gray));
+                polylineData.getPolyline().setZIndex(0);
+            }
+        }
+    }
 }
