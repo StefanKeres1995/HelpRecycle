@@ -2,4 +2,5 @@
     <string name="app_name">HelpRecycle</string>
     <string name="title_activity_gps">Map</string>
     <string name="title_activity_navigation">Navigation</string>
+    <string name="google_api_key">AIzaSyAZMNDd0DZqeZeRYNWr2VqG5doVeJIV6aI</string>
 </resources>

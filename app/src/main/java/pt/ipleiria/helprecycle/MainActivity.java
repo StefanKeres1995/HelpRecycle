@@ -119,6 +119,9 @@ public final class MainActivity extends AppCompatActivity {
     // int array to hold image data
     private int[] intValues;
 
+    //tensorflow confidence threshhold
+    private static final Float TF_THRESHHOLD = 0.4f;
+
 
 
     @Override
@@ -300,7 +303,7 @@ public final class MainActivity extends AppCompatActivity {
                             (float) imageBitmap.getHeight() / (float) maxHeight);
 
             //read all tensorflow labels from the csv
-            InputStream inputStream = getResources().openRawResource(R.raw.label_values);
+            InputStream inputStream = getResources().openRawResource(R.raw.label_values_filtered);
             CSVFile csvFile = new CSVFile(inputStream);
             HashMap<String, String> tensorflowMapValues = csvFile.read();
 
@@ -530,7 +533,9 @@ public final class MainActivity extends AppCompatActivity {
         HashMap<String, Float> tfResults = new HashMap<>();
         for (int i = 0; i < size; ++i) {
             Map.Entry<String, Float> label = sortedLabels.poll();
-            tfResults.put(label.getKey(), label.getValue());
+            if (label.getValue()> TF_THRESHHOLD){
+                tfResults.put(label.getKey(), label.getValue());
+            }
         }
 
         //only does different than nothing when either both

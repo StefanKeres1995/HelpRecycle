@@ -124,25 +124,21 @@ public class Singleton {
                     break;
             }
 
-            //check by crosschecking ml kit labels with tensorflow to get their materials
-            for (String tfKey: getTfLabels().keySet()) {
-                if (tfKey.toLowerCase().equals(mlKey.toLowerCase())){
-                    switch (getTfList().get(mlKey.toLowerCase())){
-                        case "PLASTIC":
-                        case "METAL":
-                            yellowConfidenceList.add(getMlLabels().get(mlKey));
-                            break;
-                        case "PAPER":
-                            blueConfidenceList.add(getMlLabels().get(mlKey));
-                            break;
-                        case "GLASS":
-                            greenConfidenceList.add(getMlLabels().get(mlKey));
-                            break;
-                        default:
-                            break;
-
-                    }
-
+            //check by crosschecking ml kit labels with tensorflow list to get their materials
+            if (getTfList().containsKey(mlKey.toLowerCase())){
+                switch (getTfList().get(mlKey.toLowerCase())){
+                    case "PLASTIC":
+                    case "METAL":
+                        yellowConfidenceList.add(getMlLabels().get(mlKey));
+                        break;
+                    case "PAPER":
+                        blueConfidenceList.add(getMlLabels().get(mlKey));
+                        break;
+                    case "GLASS":
+                        greenConfidenceList.add(getMlLabels().get(mlKey));
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -163,20 +159,23 @@ public class Singleton {
 
         for (String tfKey: getTfLabels().keySet()
         ) {
-            switch (getTfList().get(tfKey)){
-                case "PLASTIC":
-                case "METAL":
-                    yellowConfidenceList.add(getTfLabels().get(tfKey));
-                    break;
-                case "PAPER":
-                    blueConfidenceList.add(getTfLabels().get(tfKey));
-                    break;
-                case "GLASS":
-                    greenConfidenceList.add(getTfLabels().get(tfKey));
-                    break;
-                default:
-                    break;
+            if (getTfList().containsKey(tfKey)){
+                switch (getTfList().get(tfKey)){
+                    case "PLASTIC":
+                    case "METAL":
+                        yellowConfidenceList.add(getTfLabels().get(tfKey));
+                        break;
+                    case "PAPER":
+                        blueConfidenceList.add(getTfLabels().get(tfKey));
+                        break;
+                    case "GLASS":
+                        greenConfidenceList.add(getTfLabels().get(tfKey));
+                        break;
+                    default:
+                        break;
+                }
             }
+
         }
         //reset responseMap
 

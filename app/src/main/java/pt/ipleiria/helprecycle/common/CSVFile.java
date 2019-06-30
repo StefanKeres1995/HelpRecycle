@@ -21,7 +21,10 @@ public class CSVFile {
             String csvLine;
             while ((csvLine = reader.readLine()) != null) {
                 String[] row = csvLine.split(",");
+                // later, organic and textile can be also implemented
+                if (row[1] != "WASTE" && row[1] != "TEXTILE"){
                     resultsList.put(row[0], row[1]);
+                }
 
             }
         }

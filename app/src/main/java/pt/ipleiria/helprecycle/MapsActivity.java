@@ -81,10 +81,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_maps);
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         if(mGeoApiContext == null){
-            //Necessario quem tiver a API Key atual adicionar a "Directions API.
-            //Por enquanto, vou inserir a minha manualmente
-            //mGeoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.google_api_key)).build();
-            mGeoApiContext = new GeoApiContext.Builder().apiKey("AIzaSyBxDx54I6eSzQEi0WpZW_1Xd1m3ugZSAHw").build();
+            mGeoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.google_api_key)).build();
         }
         populateRecycleBins();
 

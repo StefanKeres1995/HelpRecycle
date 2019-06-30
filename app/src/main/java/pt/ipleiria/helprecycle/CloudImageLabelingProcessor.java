@@ -24,6 +24,8 @@ import pt.ipleiria.helprecycle.common.Singleton;
 
 public class CloudImageLabelingProcessor  extends VisionProcessorBase<List<FirebaseVisionCloudLabel>> {
     private static final String TAG = "CloudImgLabelProcessor";
+    // ml kit confidence threshhold
+    private static final float ML_THRESHHOLD = 0.4f;
 
     private final FirebaseVisionCloudLabelDetector detector;
 
@@ -55,7 +57,9 @@ public class CloudImageLabelingProcessor  extends VisionProcessorBase<List<Fireb
             FirebaseVisionCloudLabel label = labels.get(i);
             Log.d(TAG, "cloud label: " + label);
             if (label.getLabel() != null) {
-                labelsStr.put(label.getLabel(), label.getConfidence());
+                if (label.getConfidence() > ML_THRESHHOLD){
+                    labelsStr.put(label.getLabel(), label.getConfidence());
+                }
             }
         }
         Singleton.getInstance().setMlLabels(labelsStr);
