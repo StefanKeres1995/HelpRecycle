@@ -31,6 +31,7 @@ public class AugmentedImageNode extends AnchorNode {
         }
     }
 
+    //Add an image related to the image Plastic.
     public void setImagePlastic(AugmentedImage image) {
         this.image = image;
 
@@ -56,6 +57,7 @@ public class AugmentedImageNode extends AnchorNode {
         node.setRenderable(modelFuture.getNow(null));
     }
 
+    //Add an image related to the image Arrow.
     public void setImageArrow(AugmentedImage image){
         this.image = image;
 
@@ -85,6 +87,7 @@ public class AugmentedImageNode extends AnchorNode {
         return image;
     }
 
+    //Add an image related to the image Glass.
     public void setImageGlass(AugmentedImage image) {
         this.image = image;
 
@@ -110,6 +113,7 @@ public class AugmentedImageNode extends AnchorNode {
         node.setRenderable(modelFuture.getNow(null));
     }
 
+    //Add an image related to the image Paper.
     public void setImagePaper(AugmentedImage image) {
         this.image = image;
 
