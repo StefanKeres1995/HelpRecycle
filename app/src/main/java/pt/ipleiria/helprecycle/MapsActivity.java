@@ -36,7 +36,11 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.maps.DirectionsApiRequest;
+import com.google.maps.GeoApiContext;
+import com.google.maps.PendingResult;
 import com.google.maps.android.clustering.ClusterManager;
+import com.google.maps.model.DirectionsResult;
 
 import java.util.ArrayList;
 
@@ -54,22 +58,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
-    private static final float DEFAULT_ZOOM = 15f;
-
     private static final int MANUAL_PERMISSION_REQUEST_CODE = 4444;
     private static final int EXIT_GPS_ACTIVATION_CODE = 5555;
 
     private Boolean mLocationPermissionGranted = false;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-
     private ClusterManager mClusterManager;
     private ClusterManagerRenderer mClusterManagerRenderer;
     private ArrayList<ClusterMarker> mClusterMarkers = new ArrayList<>();
-
     private LatLngBounds mMapBoundary;
+    private GeoApiContext mGeoApiContext = null;
 
     private Location currentLocation;
-
     private LocationManager locationManager;
     private ArrayList<RecycleBin> recycleBins = new ArrayList<>();
 
@@ -80,6 +80,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        if(mGeoApiContext == null){
+            //Necessario quem tiver a API Key atual adicionar a "Directions API.
+            //Por enquanto, vou inserir a minha manualmente
+            //mGeoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.google_api_key)).build();
+            mGeoApiContext = new GeoApiContext.Builder().apiKey("AIzaSyBxDx54I6eSzQEi0WpZW_1Xd1m3ugZSAHw").build();
+        }
         populateRecycleBins();
 
         getLocationPermission();
@@ -134,6 +140,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 builder.setMessage("You're in range. What do you wish to do?")
                         .setCancelable(true)
                         .setPositiveButton("Analyze!", (dialog, which) -> {
+                            dialogShown = false;
                             dialog.dismiss();
                             dismiss();
                         })
@@ -162,7 +169,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }else{
                 builder.setMessage("You're too far from this recycling station. Get closer!")
                         .setCancelable(true)
-                        .setPositiveButton("Understood", (dialog, which) -> {
+                        .setPositiveButton("Get directions", (dialog, which) -> {
+                            calculateDirections(marker);
+                            dialogShown = false;
+                            dialog.dismiss();
+                        })
+                        .setNegativeButton("Close", (dialog, which) -> {
                             dialogShown = false;
                             dialog.dismiss();
                         });
@@ -359,6 +371,41 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(MapsActivity.this);
+    }
+
+    private void calculateDirections(Marker marker){
+
+        //Determine destination
+        com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(
+                marker.getPosition().latitude,
+                marker.getPosition().longitude
+        );
+        DirectionsApiRequest directions = new DirectionsApiRequest(mGeoApiContext);
+
+        //directions.alternatives(true);
+
+        //Determine origin
+        directions.origin(
+                new com.google.maps.model.LatLng(
+                        currentLocation.getLatitude(),
+                        currentLocation.getLongitude()
+                )
+        );
+        directions.destination(destination).setCallback(new PendingResult.Callback<DirectionsResult>() {
+            @Override
+            public void onResult(DirectionsResult result) {
+                System.out.println("calculateDirections: routes: " + result.routes[0].toString());
+                System.out.println("calculateDirections: duration: " + result.routes[0].legs[0].duration);
+                System.out.println("calculateDirections: distance: " + result.routes[0].legs[0].distance);
+                System.out.println("calculateDirections: geocodedWayPoints: " + result.geocodedWaypoints[0].toString());
+
+            }
+
+            @Override
+            public void onFailure(Throwable e) {
+                System.out.println("calculateDirections: Failed to get directions: " + e.getMessage());
+            }
+        });
     }
 
     private void getLocationPermission(){
