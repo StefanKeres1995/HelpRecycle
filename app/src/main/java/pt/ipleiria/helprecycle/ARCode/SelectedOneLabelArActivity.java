@@ -62,6 +62,8 @@ public class SelectedOneLabelArActivity extends AppCompatActivity {
 
         arSceneView = findViewById(R.id.surfaceview);
 
+        Toast.makeText(this, "Detected the Object " + Singleton.getInstance().getAnswer() + ". Scan the appropriate object", Toast.LENGTH_SHORT).show();
+
         installRequested = false;
 
         initializeSceneView();
@@ -131,7 +133,6 @@ public class SelectedOneLabelArActivity extends AppCompatActivity {
             // session at the next iteration.
             messageSnackbarHelper.showError(this, "Camera not available. Please restart the app.");
             session = null;
-            return;
         }
     }
 

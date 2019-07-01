@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.ml.vision.FirebaseVision;
@@ -73,17 +74,11 @@ public class CloudImageLabelingProcessor  extends VisionProcessorBase<List<Fireb
         graphicOverlay.add(cloudLabelGraphic);
         graphicOverlay.postInvalidate();*/
 
-
-
-
-
     }
 
     @Override
     protected void onFailure(@NonNull Exception e) {
         Log.e(TAG, "Cloud Label detection failed " + e);
+        Singleton.getInstance().setMlLabels(null);
     }
-
-
-
 }

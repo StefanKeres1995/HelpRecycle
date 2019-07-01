@@ -557,10 +557,12 @@ public final class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }while(Singleton.getInstance().checkIfBothMLArrived());
-
-        Intent intent = new Intent(getBaseContext(), SelectedOneLabelArActivity.class);
-        startActivity(intent);
-        super.finish();
-
+        if(Singleton.getInstance().getAnswer().equals("NOTHING")){
+            Toast.makeText(this, "I didn't detected anything recyclable.", Toast.LENGTH_SHORT).show();
+        }else{
+            Intent intent = new Intent(getBaseContext(), SelectedOneLabelArActivity.class);
+            startActivity(intent);
+            super.finish();
+        }
     }
 }

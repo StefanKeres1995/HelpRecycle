@@ -67,7 +67,11 @@ public class Singleton {
     }
 
     public String setMlLabels(HashMap<String, Float> mlLabels) {
-        this.mlLabels = mlLabels;
+        if(mlLabels == null){
+            this.mlLabels = new HashMap<>();
+        }else{
+            this.mlLabels = mlLabels;
+        }
         setMlArrived(true);
         if(checkIfBothMLArrived()){
             return joinLabels();
@@ -100,7 +104,7 @@ public class Singleton {
      * both could have nothing so the labels can return the "NOTHING" answer
      * */
 
-    public String joinLabels (){
+    private String joinLabels(){
 
 
         List<Float> yellowConfidenceList = new LinkedList<>();
@@ -216,9 +220,6 @@ public class Singleton {
                 return tfAnswer;
             }
         }
-
-
-
     }
 
     public String sortHashMapByValues(HashMap<String, Float> passedMap) {
